@@ -1,12 +1,12 @@
-#!/usr/bin/env bash
-
+#!/bin/bash
+user=$GH_USER
+token=$GH_TOKEN
+repo=$(git config --get remote.origin.url | sed -E 's/^.+[\/:]([^/]+\/[^/]+.git)$/\1/')
 tag=$(git describe --abbrev=0 --tags)
-dst=https://qiwibot:$RELEASE_GH_TOKEN@github.com/qiwi/uniconfig.git
-
-echo -e current $tag
+dst=https://$user:$token@github.com/$repo
 
 git remote add foobar $dst
 git tag -d $tag
 git push foobar --delete $tag
 
-echo -e next $(git describe --abbrev=0 --tags)
+echo $tag
