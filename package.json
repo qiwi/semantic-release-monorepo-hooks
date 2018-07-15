@@ -1,0 +1,52 @@
+{
+  "version": "1.0.0",
+  "name": "semantic-release-monorepo-hooks",
+  "description": "Semantic release monorepo hooks",
+  "keywords": [
+    "monorepo hooks",
+    "semantic release lerna",
+    "semantic release monorepo"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:qiwi/semantic-release-monorepo-hooks.git"
+  },
+  "scripts": {
+    "test": "npm run lint && npm run jest",
+    "test_with_report": "npm test && npm run codeclimate_push && npm run coveralls_push",
+    "codeclimate_push": "codeclimate-test-reporter < ./coverage/lcov.info",
+    "coveralls_push": "cat ./coverage/lcov.info | coveralls",
+    "jest": "BABEL_ENV=test NODE_ENV=test jest -w 1 --detectOpenHandles --config jest.config.json",
+    "lint": "standard src/**/*.js test/**/*.js"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^2.1.1",
+    "@semantic-release/git": "^6.0.1",
+    "@semantic-release/github": "^4.2.18",
+    "@semantic-release/npm": "^3.3.4",
+    "codeclimate-test-reporter": "^0.5.0",
+    "coveralls": "^3.0.2",
+    "jest": "^23.2.0",
+    "mock-fs": "^4.5.0",
+    "semantic-release": "^15.6.3",
+    "standard": "^11.0.1"
+  },
+  "standard": {
+    "globals": [
+      "jest",
+      "it",
+      "expect",
+      "describe",
+      "before",
+      "beforeAll",
+      "beforeEach",
+      "afterAll",
+      "after",
+      "afterEach",
+      "xdescribe",
+      "xit"
+    ],
+    "ignore": []
+  },
+  "dependencies": {}
+}
