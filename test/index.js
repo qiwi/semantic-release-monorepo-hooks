@@ -13,7 +13,11 @@ describe('lib', () => {
   describe('hooks `semantic release monorepo` flow', () => {
     const exec = jest.spyOn(cp, 'execSync')
 
-    beforeAll(() => fs.unlinkSync(PATH))
+    beforeAll(() => {
+      if (fs.existsSync(PATH)) {
+        fs.unlinkSync(PATH)
+      }
+    })
     afterEach(() => {
       exec.mockReset()
       mockFs.restore()
