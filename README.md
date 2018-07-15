@@ -2,7 +2,7 @@
 Workaround to force `semantic-release-monorepo` multipublishing.
 
 ## Problem
-1) `semantic-release` does not support `lerna`-based repos aka `monorepos`
+1) `semantic-release` does not support `lerna`-based repos aka `monorepos` out of box.
 2) `semantic-release-monorepo` can not release several packages at once: after the first sub-release it appends a new git version tag, so any next run finds no changes.
 ```bash
 [Semantic release]: Found 0 commits for package *** since last release
@@ -15,7 +15,8 @@ Workaround to force `semantic-release-monorepo` multipublishing.
   npm i -D semantic-release-monorepo-hooks
 ```
 
-## Configure .releaserc.js
+## Configure
+##### 1. Configure `.releaserc.js`
 ```javascript
   const hooks = require('semantic-release-monorepo-hooks')
   const output = hooks()
@@ -45,9 +46,8 @@ Workaround to force `semantic-release-monorepo` multipublishing.
   };
 ```
 
-## Configure .travis.yml
+##### 2. Configure `.travis.yml`
 ```yaml
-
 deploy:
   provider: script
   skip_cleanup: true
@@ -55,3 +55,5 @@ deploy:
     - yarn lerna exec --concurrency 1 "npx --no-install semantic-release -e semantic-release-monorepo"
 ```
 
+##### 3. Configure `env` vars
+`GH_TOKEN` and `GH_USER` must be declared for `git push`. See [drop_last_tag.sh](./src/drop_last_tag.sh) for details.
