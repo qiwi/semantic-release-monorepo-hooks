@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v1.0.0...v1.1.0) (2018-07-15)
+
+
+### Features
+
+* add `dry-run` mode ([b2b0b84](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/b2b0b84))
+
 # 1.0.0 (2018-07-15)
 
 
