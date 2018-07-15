@@ -18,6 +18,7 @@ describe('lib', () => {
         fs.unlinkSync(PATH)
       }
     })
+
     afterEach(() => {
       exec.mockReset()
       mockFs.restore()
