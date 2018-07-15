@@ -9,7 +9,7 @@ const LOG_PACKS_SH = resolve('./log_modified_packs.sh')
 const COUNT_PACKS_SH = resolve('./count_modified_packs.sh')
 const DROP_TAG_SH = resolve('./drop_last_tag.sh')
 
-module.exports = function () {
+module.exports = function (dryRun) {
   const exec = cp.execSync
   const isFirstRun = !fs.existsSync(COUNT)
 
@@ -25,24 +25,26 @@ module.exports = function () {
   log('is last run:', isLastRun)
   log('packages left:', left)
 
-  if (count > 0) {
-    try {
-      if (isFirstRun) {
-        log(exec(`sh ${LOG_PACKS_SH}`))
-      } else {
-        tag = exec(`sh ${DROP_TAG_SH}`)
-        log('drop tag', tag)
+  if (!dryRun) {
+    if (count > 0) {
+      try {
+        if (isFirstRun) {
+          log(exec(`sh ${LOG_PACKS_SH}`))
+        } else {
+          tag = exec(`sh ${DROP_TAG_SH}`)
+          log('drop tag', tag)
+        }
+
+        count -= 1
+        fs.writeFileSync(COUNT, count + '')
+      } catch (err) {
+        log('[error]:', err)
       }
-
-      count -= 1
-      fs.writeFileSync(COUNT, count + '')
-    } catch (err) {
-      log('[error]:', err)
     }
-  }
 
-  if (isLastRun && !isFirstRun) {
-    fs.unlinkSync(COUNT)
+    if (isLastRun && !isFirstRun) {
+      fs.unlinkSync(COUNT)
+    }
   }
 
   return {

@@ -24,6 +24,18 @@ describe('lib', () => {
       mockFs.restore()
     })
 
+    it('does nothing if no changes found', () => {
+      exec
+        .mockReturnValueOnce(0)
+
+      const res = rh()
+
+      expect(res.isFirstRun).toBeTruthy()
+      expect(res.isLastRun).toBeTruthy()
+      expect(res.packagesLeft).toBe(0)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/count_modified_packs.sh')}`)
+    })
+
     it('detects the first run, gets modified packages count from `sh`, stores data to temp file', () => {
       exec
         .mockReturnValueOnce(10)
@@ -50,6 +62,19 @@ describe('lib', () => {
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/drop_last_tag.sh')}`)
 
       expect(fs.readFileSync(PATH, {encoding: 'utf8'})).toBe('9')
+    })
+
+    it('when `dryRun` passed handler works as analyser', () => {
+      mockFs({[PATH]: '10'})
+
+      const res = rh(true)
+
+      expect(res.isFirstRun).toBeFalsy()
+      expect(res.packagesLeft).toBe(9)
+      expect(res.droppedTag).toBeNull()
+      expect(exec).not.toHaveBeenCalled()
+
+      expect(fs.readFileSync(PATH, {encoding: 'utf8'})).toBe('10')
     })
 
     it('unlinks tempfile on the last run', () => {
