@@ -1,4 +1,3 @@
-const mockFs = require('mock-fs')
 const path = require('path')
 const fs = require('fs')
 const cp = require('child_process')
@@ -19,70 +18,114 @@ describe('lib', () => {
     }
 
     beforeAll(unlink)
-    afterAll(unlink)
-
     afterEach(() => {
-      exec.mockReset()
-      mockFs.restore()
+      exec.mockClear()
+      unlink()
     })
 
     it('does nothing if no changes found', () => {
       exec
-        .mockReturnValueOnce(0)
+        .mockReturnValueOnce('v1.0.0')
+        .mockReturnValueOnce('')
+        .mockReturnValueOnce('v1.0.0')
+        .mockReturnValueOnce('0')
+        .mockReturnValueOnce('4')
 
       const res = rh()
 
-      expect(res.isFirstRun).toBeTruthy()
-      expect(res.isLastRun).toBeTruthy()
-      expect(res.packagesLeft).toBe(0)
+      expect(res.isLastChanged).toBeTruthy()
+      expect(res.isLastRun).toBeFalsy()
+      expect(res.processed).toBe(0)
+      expect(res.changed).toBe(0)
+      expect(res.total).toBe(4)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/log_modified_packs.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/count_modified_packs.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/count_all_packs.sh')}`)
     })
 
-    it('detects the first run, gets modified packages count from `sh`, stores data to temp file', () => {
+    it('handles `1 of 1` case', () => {
       exec
-        .mockReturnValueOnce(10)
-        .mockReturnValueOnce('file 1, file2')
+        .mockReturnValueOnce('v1.0.0')
+        .mockReturnValueOnce('package/foo/bar.js, package/baz/qux.js')
+        .mockReturnValueOnce('v1.0.0')
+        .mockReturnValueOnce('1')
+        .mockReturnValueOnce('1')
 
       const res = rh()
 
-      expect(res.isFirstRun).toBeTruthy()
-      expect(res.isLastRun).toBeFalsy()
-      expect(res.packagesLeft).toBe(9)
+      expect(res.isLastChanged).toBeTruthy()
+      expect(res.isLastRun).toBeTruthy()
+      expect(res.processed).toBe(1)
+      expect(res.changed).toBe(1)
+      expect(res.total).toBe(1)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/log_modified_packs.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/count_modified_packs.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/count_all_packs.sh')}`)
+      expect(fs.existsSync(PATH)).toBeFalsy()
     })
 
     it('detects 2nd and other runs, and triggers `drop tag sh`, updates temp file', () => {
-      mockFs({[PATH]: '10'})
+      fs.writeFileSync(PATH, JSON.stringify({
+        tag: 'v1.0.0',
+        changed: 2,
+        total: 6,
+        processed: 0,
+        run: 1
+      }))
+
       exec
-        .mockReturnValueOnce('v1.0.0')
+        .mockReturnValueOnce('v1.0.1') // run #2
+        .mockReturnValueOnce('v1.0.1') // drop tag
+        .mockReturnValueOnce('v1.0.0') // run #3
+        .mockReturnValueOnce('v1.0.0') // run #4
+        .mockReturnValueOnce('v1.0.1') // run #5
+        .mockReturnValueOnce('v1.0.1') // drop tag
+        .mockReturnValueOnce('v1.0.1') // run #6
 
-      const res = rh()
+      const [res2, res3, res4, res5, res6] = [rh(), rh(), rh(), rh(), rh()]
 
-      expect(res.isFirstRun).toBeFalsy()
-      expect(res.packagesLeft).toBe(9)
-      expect(res.droppedTag).toBe('v1.0.0')
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/drop_last_tag.sh')}`)
-
-      expect(fs.readFileSync(PATH, {encoding: 'utf8'})).toBe('9')
+      expect(res2.processed).toBe(1)
+      expect(res3.processed).toBe(1)
+      expect(res4.processed).toBe(1)
+      expect(res5.processed).toBe(2)
+      expect(res6.processed).toBe(2)
     })
 
     it('when `dryRun` passed handler works as analyser', () => {
-      mockFs({[PATH]: '10'})
+      const temp = {
+        tag: 'v1.0.0',
+        changed: 2,
+        total: 6,
+        processed: 0,
+        run: 1
+      }
+      fs.writeFileSync(PATH, JSON.stringify(temp))
+
+      exec
+        .mockReturnValueOnce('v1.0.1') // run #2
 
       const res = rh(true)
 
-      expect(res.isFirstRun).toBeFalsy()
-      expect(res.packagesLeft).toBe(10)
-      expect(res.droppedTag).toBeNull()
-      expect(exec).not.toHaveBeenCalled()
+      expect(res.isLastChanged).toBeFalsy()
+      expect(res.isLastRun).toBeFalsy()
+      expect(res.processed).toBe(0)
+      expect(res.tag).toBe('v1.0.1')
 
-      expect(fs.readFileSync(PATH, {encoding: 'utf8'})).toBe('10')
+      expect(fs.readFileSync(PATH, {encoding: 'utf8'})).toBe(JSON.stringify(temp))
     })
 
     it('unlinks tempfile on the last run', () => {
-      mockFs({[PATH]: '1'})
-      exec
-        .mockReturnValueOnce('v1.0.0')
+      fs.writeFileSync(PATH, JSON.stringify({
+        tag: 'v1.0.0',
+        changed: 2,
+        total: 6,
+        processed: 2,
+        run: 5
+      }))
 
       expect(fs.existsSync(PATH)).toBeTruthy()
       expect(rh().isLastRun).toBeTruthy()

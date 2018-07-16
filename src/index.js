@@ -4,69 +4,80 @@ const cp = require('child_process')
 const log = console.log.bind(console, '[release-hooks]')
 const resolve = path.resolve.bind(path, __dirname)
 
-const COUNT = resolve('./count.tmp')
+const TEMP = resolve('./count.tmp')
 const LOG_PACKS_SH = resolve('./log_modified_packs.sh')
-const COUNT_PACKS_SH = resolve('./count_modified_packs.sh')
+const COUNT_MOD_PACKS_SH = resolve('./count_modified_packs.sh')
+const COUNT_ALL_PACKS_SH = resolve('./count_all_packs.sh')
+const GET_LAST_TAG_SH = resolve('./get_last_tag.sh')
 const DROP_TAG_SH = resolve('./drop_last_tag.sh')
 
 module.exports = function (dryRun) {
   const exec = cp.execSync
-  const isFirstRun = !fs.existsSync(COUNT)
-  let tag = null
-  let count = getCount(exec, isFirstRun)
-  const isLastRun = count <= 1
+  const tag = exec(`sh ${GET_LAST_TAG_SH}`).toString()
+  const temp = getTemp(exec)
 
   if (!dryRun) {
-    if (count > 0) {
-      try {
-        count = decrement(count)
-        tag = dropTag(exec, isFirstRun)
-      } catch (err) {
-        log('[error]:', err)
+    temp.run += 1
+
+    try {
+      if (temp.total === temp.changed) {
+        temp.processed += 1
+      } else if (tag !== temp.tag && temp.changed > temp.processed) {
+        temp.processed += 1
+        dropLastTag(exec)
       }
+    } catch (err) {
+      log('[error]:', err)
     }
-    unlink(isFirstRun, isLastRun)
+
+    if (temp.run === temp.total) {
+      unlinkTemp()
+    } else {
+      storeTemp(temp)
+    }
   }
 
-  log('is first run:', isFirstRun)
-  log('is last run:', isLastRun)
-  log('packages left:', count)
+  log(temp)
 
   return {
-    isLastRun,
-    isFirstRun,
-    packagesLeft: count,
-    droppedTag: tag
+    isLastChanged:  temp.processed === temp.changed,
+    isLastRun:      temp.run === temp.total,
+    processed:      temp.processed,
+    changed:        temp.changed,
+    total:          temp.total,
+    tag
   }
 }
 
-function unlink (isFirstRun, isLastRun) {
-  if (isLastRun && !isFirstRun) {
-    fs.unlinkSync(COUNT)
+function unlinkTemp () {
+  if (fs.existsSync(TEMP)) {
+    fs.unlinkSync(TEMP)
   }
 }
 
-function decrement (count) {
-  count -= 1
-  fs.writeFileSync(COUNT, count + '')
-
-  return count
-}
-
-function dropTag (exec, isFirstRun) {
-  if (isFirstRun) {
-    log(exec(`sh ${LOG_PACKS_SH}`).toString())
-    return null
-  }
-
+function dropLastTag (exec) {
   const tag = exec(`sh ${DROP_TAG_SH}`).toString()
   log('drop tag', tag)
 
   return tag
 }
 
-function getCount (exec, isFirstRun) {
-  return isFirstRun
-    ? +exec(`sh ${COUNT_PACKS_SH}`).toString()
-    : +fs.readFileSync(COUNT, {encoding: 'utf8'})
+function getTemp (exec) {
+  if (fs.existsSync(TEMP)) {
+    return JSON.parse(fs.readFileSync(TEMP, {encoding: 'utf8'}))
+  }
+
+  log(exec(`sh ${LOG_PACKS_SH}`).toString())
+
+  return {
+    tag: exec(`sh ${GET_LAST_TAG_SH}`).toString(),
+    changed: +exec(`sh ${COUNT_MOD_PACKS_SH}`).toString(),
+    total: +exec(`sh ${COUNT_ALL_PACKS_SH}`).toString(),
+    processed: 0,
+    run: 0
+  }
+}
+
+function storeTemp (data) {
+  fs.writeFileSync(TEMP, JSON.stringify(data))
 }
