@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v1.1.2...v1.1.3) (2018-07-16)
+
+
+### Bug Fixes
+
+* hold entire iterator state ([c6f6427](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/c6f6427)), closes [#1](https://github.com/qiwi/semantic-release-monorepo-hooks/issues/1)
+
 ## [1.1.2](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v1.1.1...v1.1.2) (2018-07-16)
 
 
