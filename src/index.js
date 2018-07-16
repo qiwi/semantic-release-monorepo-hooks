@@ -40,11 +40,11 @@ module.exports = function (dryRun) {
   log(temp)
 
   return {
-    isLastChanged:  temp.processed === temp.changed,
-    isLastRun:      temp.run === temp.total,
-    processed:      temp.processed,
-    changed:        temp.changed,
-    total:          temp.total,
+    isLastChanged: temp.processed === temp.changed,
+    isLastRun: temp.run === temp.total,
+    processed: temp.processed,
+    changed: temp.changed,
+    total: temp.total,
     tag
   }
 }
