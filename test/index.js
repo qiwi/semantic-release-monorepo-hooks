@@ -12,12 +12,14 @@ describe('lib', () => {
 
   describe('hooks `semantic release monorepo` flow', () => {
     const exec = jest.spyOn(cp, 'execSync')
-
-    beforeAll(() => {
+    const unlink = () => {
       if (fs.existsSync(PATH)) {
         fs.unlinkSync(PATH)
       }
-    })
+    }
+
+    beforeAll(unlink)
+    afterAll(unlink)
 
     afterEach(() => {
       exec.mockReset()
@@ -70,7 +72,7 @@ describe('lib', () => {
       const res = rh(true)
 
       expect(res.isFirstRun).toBeFalsy()
-      expect(res.packagesLeft).toBe(9)
+      expect(res.packagesLeft).toBe(10)
       expect(res.droppedTag).toBeNull()
       expect(exec).not.toHaveBeenCalled()
 
@@ -79,6 +81,8 @@ describe('lib', () => {
 
     it('unlinks tempfile on the last run', () => {
       mockFs({[PATH]: '1'})
+      exec
+        .mockReturnValueOnce('v1.0.0')
 
       expect(fs.existsSync(PATH)).toBeTruthy()
       expect(rh().isLastRun).toBeTruthy()
