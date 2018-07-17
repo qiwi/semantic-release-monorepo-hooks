@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v1.1.3...v1.1.4) (2018-07-17)
+
+
+### Bug Fixes
+
+* the last tag may optionally be not annotated ([a352183](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/a352183))
+
 ## [1.1.3](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v1.1.2...v1.1.3) (2018-07-16)
 
 
