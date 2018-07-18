@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo $(git describe --tags)
+echo $(git describe --abbrev=0 --tags)
