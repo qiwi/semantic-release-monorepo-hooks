@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v1.1.5...v1.1.6) (2018-07-22)
+
+
+### Bug Fixes
+
+* handle `total equal changed` case ([230837e](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/230837e))
+
 ## [1.1.5](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v1.1.4...v1.1.5) (2018-07-18)
 
 
