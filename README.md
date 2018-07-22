@@ -10,9 +10,19 @@ Workaround to force `semantic-release-monorepo` multipublishing.
 
 ## Install
 ```bash
-  npm i -D semantic-release
+  npm i -D semantic-release@15.6.3
   npm i -D semantic-release-monorepo
   npm i -D semantic-release-monorepo-hooks
+```
+##### Note
+It's necessary to lock version due to incompatibility issue of `semantic-release-plugin-decorators`: it looks to be broken on the latest `semantic-release`.
+```bash
+[Semantic release]: An error occurred while running semantic-release: { TypeError: Expected `moduleId` to be of type `string`, got `object`
+ at resolveFrom (/home/travis/build/qiwi/travis-toolkit/node_modules/resolve-from/index.js:11:9)
+ at module.exports (/home/travis/build/qiwi/travis-toolkit/node_modules/resolve-from/index.js:34:41)
+ at module.exports (/home/travis/build/qiwi/travis-toolkit/node_modules/import-from/index.js:4:49)
+ at requirePlugin (/home/travis/build/qiwi/travis-toolkit/node_modules/semantic-release-plugin-decorators/src/index.js:4:33)
+ at resolvePluginFn (/home/travis/build/qiwi/travis-toolkit/node_modules/semantic-release-plugin-decorators/src/index.js:18:18)
 ```
 
 ## Configure
