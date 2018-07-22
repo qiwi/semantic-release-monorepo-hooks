@@ -15,16 +15,22 @@ module.exports = function (dryRun) {
   const exec = cp.execSync
   const tag = exec(`sh ${GET_LAST_TAG_SH}`).toString()
   const temp = getTemp(exec)
+  let isLastRun = false
 
   if (!dryRun) {
     temp.run += 1
+    isLastRun = temp.run === temp.total
 
     try {
-      if (temp.total === temp.changed) {
+      if (temp.total === 1) {
         temp.processed += 1
       } else if (tag !== temp.tag && temp.changed > temp.processed) {
         temp.processed += 1
         dropLastTag(exec)
+      }
+
+      if (isLastRun) {
+        temp.processed = temp.changed
       }
     } catch (err) {
       log('[error]:', err)

@@ -48,7 +48,7 @@ describe('lib', () => {
     it('handles `1 of 1` case', () => {
       exec
         .mockReturnValueOnce('v1.0.0')
-        .mockReturnValueOnce('package/foo/bar.js, package/baz/qux.js')
+        .mockReturnValueOnce('package/foo/bar.js')
         .mockReturnValueOnce('v1.0.0')
         .mockReturnValueOnce('1')
         .mockReturnValueOnce('1')
@@ -65,6 +65,46 @@ describe('lib', () => {
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/count_modified_packs.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/count_all_packs.sh')}`)
+      expect(fs.existsSync(PATH)).toBeFalsy()
+    })
+
+    it('handles `total` equals `changed`', () => {
+      exec
+        .mockReturnValueOnce('v1.0.0')
+        .mockReturnValueOnce('package/foo/bar.js package/bar/qux.js')
+        .mockReturnValueOnce('v1.0.0')
+        .mockReturnValueOnce('2')
+        .mockReturnValueOnce('2')
+        .mockReturnValueOnce('v1.1.0')
+        .mockReturnValueOnce('v1.1.0') // drop tag
+
+      const [res1, res2] = [rh(), rh()]
+
+      expect(res1).toEqual({
+        isLastChanged: false,
+        isLastRun: false,
+        processed: 0,
+        changed: 2,
+        total: 2,
+        tag: 'v1.0.0'
+      })
+
+      expect(res2).toEqual({
+        isLastChanged: true,
+        isLastRun: true,
+        processed: 2,
+        changed: 2,
+        total: 2,
+        tag: 'v1.1.0'
+      })
+
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/log_modified_packs.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/count_modified_packs.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/count_all_packs.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/drop_last_tag.sh')}`)
       expect(fs.existsSync(PATH)).toBeFalsy()
     })
 
