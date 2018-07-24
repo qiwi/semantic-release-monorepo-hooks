@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.0.0...v2.1.0) (2018-07-24)
+
+
+### Features
+
+* add `isModified` field to result ([5542f1f](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/5542f1f))
+
 # [2.0.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v1.1.6...v2.0.0) (2018-07-24)
 
 
