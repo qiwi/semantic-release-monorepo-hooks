@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v1.1.6...v2.0.0) (2018-07-24)
+
+
+### Features
+
+* use package name instead of change index ([820968d](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/820968d))
+
+
+### BREAKING CHANGES
+
+* `isLastChanged` → `isLastModified`
+
 ## [1.1.6](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v1.1.5...v1.1.6) (2018-07-22)
 
 
