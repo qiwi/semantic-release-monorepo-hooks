@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.1.0...v2.1.1) (2018-07-24)
+
+
+### Bug Fixes
+
+* **get_modified_packs:** should run from any dir ([163186c](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/163186c))
+
 # [2.1.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.0.0...v2.1.0) (2018-07-24)
 
 
