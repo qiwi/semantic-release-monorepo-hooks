@@ -1,36 +1,33 @@
 const fs = require('fs')
 const path = require('path')
 const cp = require('child_process')
+const readPkg = require('read-pkg')
 const log = console.log.bind(console, '[release-hooks]')
 const resolve = path.resolve.bind(path, __dirname)
 
 const TEMP = resolve('./count.tmp')
-const LOG_PACKS_SH = resolve('./log_modified_packs.sh')
-const COUNT_MOD_PACKS_SH = resolve('./count_modified_packs.sh')
 const COUNT_ALL_PACKS_SH = resolve('./count_all_packs.sh')
 const GET_LAST_TAG_SH = resolve('./get_last_tag.sh')
 const DROP_TAG_SH = resolve('./drop_last_tag.sh')
+const MODIFIED_PACKS_NAMES = resolve('./get_modified_packs.sh')
 
 module.exports = function (dryRun) {
+  const name = readPkg.sync().name
   const exec = cp.execSync
-  const tag = exec(`sh ${GET_LAST_TAG_SH}`).toString()
   const temp = getTemp(exec)
-  let isLastRun = false
+  const tag = exec(`sh ${GET_LAST_TAG_SH}`).toString()
+  const shouldRelease = temp.modifiedPacks.indexOf(name) !== -1
 
   if (!dryRun) {
     temp.run += 1
-    isLastRun = temp.run === temp.total
 
     try {
-      if (temp.total === 1) {
+      if (shouldRelease) {
         temp.processed += 1
-      } else if (tag !== temp.tag && temp.changed > temp.processed) {
-        temp.processed += 1
-        dropLastTag(exec)
-      }
 
-      if (isLastRun) {
-        temp.processed = temp.changed
+        if (tag !== temp.tag) {
+          dropLastTag(exec)
+        }
       }
     } catch (err) {
       log('[error]:', err)
@@ -43,16 +40,21 @@ module.exports = function (dryRun) {
     }
   }
 
-  log(temp)
-
-  return {
-    isLastChanged: temp.processed === temp.changed,
+  const res = {
+    isLastModified: shouldRelease && temp.processed === temp.modified,
     isLastRun: temp.run === temp.total,
-    processed: temp.processed,
-    changed: temp.changed,
     total: temp.total,
-    tag
+    processed: temp.processed,
+    modified: temp.modified,
+    modifiedPacks: temp.modifiedPacks,
+    package: name,
+    tag,
+    run: temp.run
   }
+
+  log(res)
+
+  return res
 }
 
 function unlinkTemp () {
@@ -73,12 +75,18 @@ function getTemp (exec) {
     return JSON.parse(fs.readFileSync(TEMP, {encoding: 'utf8'}))
   }
 
-  log(exec(`sh ${LOG_PACKS_SH}`).toString())
+  const tag = exec(`sh ${GET_LAST_TAG_SH}`).toString()
+  const total = +exec(`sh ${COUNT_ALL_PACKS_SH}`).toString()
+  const _names = exec(`sh ${MODIFIED_PACKS_NAMES}`).toString()
+  const names = _names.length
+    ? _names.replace(/["\n]/g, '').split(' ')
+    : []
 
   return {
-    tag: exec(`sh ${GET_LAST_TAG_SH}`).toString(),
-    changed: +exec(`sh ${COUNT_MOD_PACKS_SH}`).toString(),
-    total: +exec(`sh ${COUNT_ALL_PACKS_SH}`).toString(),
+    tag,
+    modifiedPacks: names,
+    modified: names.length,
+    total,
     processed: 0,
     run: 0
   }
