@@ -16,32 +16,15 @@ module.exports = function (dryRun) {
   const exec = cp.execSync
   const temp = getTemp(exec)
   const tag = exec(`sh ${GET_LAST_TAG_SH}`).toString()
-  const shouldRelease = temp.modifiedPacks.indexOf(name) !== -1
+  const isModified = temp.modifiedPacks.indexOf(name) !== -1
 
   if (!dryRun) {
-    temp.run += 1
-
-    try {
-      if (shouldRelease) {
-        temp.processed += 1
-
-        if (tag !== temp.tag) {
-          dropLastTag(exec)
-        }
-      }
-    } catch (err) {
-      log('[error]:', err)
-    }
-
-    if (temp.run === temp.total) {
-      unlinkTemp()
-    } else {
-      storeTemp(temp)
-    }
+    process(temp, exec, tag, isModified)
   }
 
   const res = {
-    isLastModified: shouldRelease && temp.processed === temp.modified,
+    isModified,
+    isLastModified: isModified && temp.processed === temp.modified,
     isLastRun: temp.run === temp.total,
     total: temp.total,
     processed: temp.processed,
@@ -55,6 +38,28 @@ module.exports = function (dryRun) {
   log(res)
 
   return res
+}
+
+function process (temp, exec, tag, isModified) {
+  temp.run += 1
+
+  try {
+    if (isModified) {
+      temp.processed += 1
+
+      if (tag !== temp.tag) {
+        dropLastTag(exec)
+      }
+    }
+  } catch (err) {
+    log('[error]:', err)
+  }
+
+  if (temp.run === temp.total) {
+    unlinkTemp()
+  } else {
+    storeTemp(temp)
+  }
 }
 
 function unlinkTemp () {

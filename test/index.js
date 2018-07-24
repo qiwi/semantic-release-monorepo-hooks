@@ -47,6 +47,7 @@ describe('lib', () => {
         run: 1,
         isLastModified: false,
         isLastRun: false,
+        isModified: false,
         package: 'foo'
       })
     })
@@ -72,6 +73,7 @@ describe('lib', () => {
         run: 1,
         isLastModified: true,
         isLastRun: true,
+        isModified: true,
         package: '@qiwi/pijma-core'
       })
 
@@ -123,6 +125,7 @@ describe('lib', () => {
         run: 1,
         isLastModified: false,
         isLastRun: false,
+        isModified: false,
         package: '@qiwi/pijma-desktop'
       })
 
@@ -135,6 +138,7 @@ describe('lib', () => {
         run: 2,
         isLastModified: false,
         isLastRun: false,
+        isModified: true,
         package: '@qiwi/pijma-core'
       })
 
@@ -147,6 +151,7 @@ describe('lib', () => {
         run: 3,
         isLastModified: true,
         isLastRun: false,
+        isModified: true,
         package: '@qiwi/pijma-mobile'
       })
 
@@ -159,6 +164,7 @@ describe('lib', () => {
         run: 4,
         isLastModified: false,
         isLastRun: false,
+        isModified: false,
         package: '@qiwi/pijma-app'
       })
 
@@ -171,6 +177,7 @@ describe('lib', () => {
         run: 5,
         isLastModified: false,
         isLastRun: true,
+        isModified: false,
         package: 'pijma'
       })
     })
@@ -195,6 +202,7 @@ describe('lib', () => {
       const res = rh(true)
 
       expect(res.isLastModified).toBeFalsy()
+      expect(res.isModified).toBeTruthy()
       expect(res.isLastRun).toBeFalsy()
       expect(res.processed).toBe(0)
       expect(res.tag).toBe('v1.0.1')
