@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const cp = require('child_process')
 const readPkg = require('read-pkg')
-const log = console.log.bind(console, '[release-hooks]')
+const log = console.log.bind(console, '[release-hooks]:')
 const resolve = path.resolve.bind(path, __dirname)
 
 const TEMP = resolve('./count.tmp')
@@ -43,18 +43,18 @@ module.exports = function (dryRun) {
 function process (temp, exec, tag, isModified) {
   temp.run += 1
 
-  try {
-    if (isModified) {
-      temp.processed += 1
+  if (isModified) {
+    temp.processed += 1
 
-      if (tag !== temp.tag) {
-        dropLastTag(exec)
-      }
+    if (tag !== temp.tag) {
+      dropLastTag(exec)
     }
-  } catch (err) {
-    log('[error]:', err)
   }
 
+  saveTemp(temp)
+}
+
+function saveTemp (temp) {
   if (temp.run === temp.total) {
     unlinkTemp()
   } else {
