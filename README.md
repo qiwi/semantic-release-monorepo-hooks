@@ -31,7 +31,7 @@ It's necessary to lock version due to incompatibility issue of `semantic-release
   const hooks = require('semantic-release-monorepo-hooks')
   const output = hooks()
   
-  const publish = output.isLastRun
+  const publish = output.isLastModified
     ? [
       '@semantic-release/github',
       '@semantic-release/npm'
@@ -67,3 +67,20 @@ deploy:
 
 ##### 3. Configure `env` vars
 `GH_TOKEN` and `GH_USER` must be declared for `git push`. See [drop_last_tag.sh](./src/drop_last_tag.sh) for details.
+
+## hooks()
+Hooks reverts some effects of previous `semantic-release` run and returns info map as a result:
+```javascript
+  {
+    isModified: true,
+    isLastModified: false,
+    isLastRun: false,
+    total: 5,
+    processed: 1,
+    modified: 2,
+    modifiedPacks: [ '@qiwi/pijma-core', '@qiwi/pijma-desktop' ],
+    package: '@qiwi/pijma-core',
+    tag: 'v1.5.0\n',
+    run: 1
+  }
+```
