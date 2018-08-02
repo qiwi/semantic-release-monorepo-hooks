@@ -77,10 +77,10 @@ describe('lib', () => {
         package: '@qiwi/pijma-core'
       })
 
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_modified_packs.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/count_all_packs.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_modified_packs.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/count_all_packs.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
       expect(fs.existsSync(PATH)).toBeFalsy()
     })
 
@@ -106,15 +106,15 @@ describe('lib', () => {
       const modifiedPacks = ['@qiwi/pijma-core', '@qiwi/pijma-mobile']
       const [res1, res2, res3, res4, res5] = [rh(), rh(), rh(), rh(), rh()]
 
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/count_all_packs.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_modified_packs.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/drop_last_tag.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/count_all_packs.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_modified_packs.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/drop_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
 
       expect(res1).toEqual({
         tag: 'v1.0.0',
