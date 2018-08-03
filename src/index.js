@@ -1,12 +1,11 @@
-const fs = require('fs')
 const readPkg = require('read-pkg')
 const sh = require('./sh')
-const {TEMP} = require('./path')
+const store = require('./store')
 const log = console.log.bind(console, '[release-hooks]:')
 
 module.exports = function (dryRun) {
   const name = readPkg.sync().name
-  const temp = getTemp()
+  const temp = store.get()
   const tag = sh.getLastTag()
   const isModified = temp.modifiedPacks.indexOf(name) !== -1
 
@@ -48,15 +47,9 @@ function process (temp, tag, isModified) {
 
 function saveTemp (temp) {
   if (temp.run === temp.total) {
-    unlinkTemp()
+    store.unlink()
   } else {
-    storeTemp(temp)
-  }
-}
-
-function unlinkTemp () {
-  if (fs.existsSync(TEMP)) {
-    fs.unlinkSync(TEMP)
+    store.save(temp)
   }
 }
 
@@ -65,30 +58,4 @@ function dropLastTag () {
   log('drop tag', tag)
 
   return tag
-}
-
-function getTemp () {
-  if (fs.existsSync(TEMP)) {
-    return JSON.parse(fs.readFileSync(TEMP, {encoding: 'utf8'}))
-  }
-
-  const tag = sh.getLastTag()
-  const total = sh.countAllPacks()
-  const _names = sh.getModifiedPacks()
-  const names = _names.length
-    ? _names.replace(/["\n]/g, '').split(' ')
-    : []
-
-  return {
-    tag,
-    modifiedPacks: names,
-    modified: names.length,
-    total,
-    processed: 0,
-    run: 0
-  }
-}
-
-function storeTemp (data) {
-  fs.writeFileSync(TEMP, JSON.stringify(data))
 }
