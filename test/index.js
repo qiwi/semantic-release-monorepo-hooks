@@ -217,7 +217,11 @@ describe('lib', () => {
         modified: 2,
         total: 6,
         processed: 2,
-        run: 5
+        run: 5,
+        reverted: [
+          {tag: 'v1.1.0', message: 'Foo release'},
+          {tag: 'v1.0.1', message: 'Bar release'}
+        ]
       }))
 
       pack

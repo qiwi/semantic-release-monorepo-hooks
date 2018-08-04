@@ -37,9 +37,7 @@ function process (temp, tag, isModified) {
   if (isModified) {
     temp.processed += 1
 
-    if (tag !== temp.tag) {
-      dropLastTag()
-    }
+    handleRelease(temp, tag)
   }
 
   saveTemp(temp)
@@ -58,4 +56,18 @@ function dropLastTag () {
   log('drop tag', tag)
 
   return tag
+}
+
+function handleRelease (temp, currentTag) {
+  if (temp.tag !== currentTag) {
+    const tag = sh.dropLastTag()
+    const message = '' //sh.getLastTagMessage()
+
+    temp.reverted.push({
+      tag,
+      message
+    })
+
+    log('drop redundant release', 'tag=', tag, 'message=', message)
+  }
 }

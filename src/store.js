@@ -21,7 +21,8 @@ module.exports = {
       modified: names.length,
       total,
       processed: 0,
-      run: 0
+      run: 0,
+      reverted: []
     }
   },
   save (data) {
