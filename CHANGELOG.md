@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.1.1...v2.2.0) (2018-08-06)
+
+
+### Features
+
+* attach reverted tag message to temp data ([8b33ba2](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/8b33ba2))
+
 ## [2.1.1](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.1.0...v2.1.1) (2018-07-24)
 
 
