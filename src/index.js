@@ -60,8 +60,8 @@ function dropLastTag () {
 
 function handleRelease (temp, currentTag) {
   if (temp.tag !== currentTag) {
+    const message = sh.getLastTagMessage()
     const tag = sh.dropLastTag()
-    const message = '' //sh.getLastTagMessage()
 
     temp.reverted.push({
       tag,

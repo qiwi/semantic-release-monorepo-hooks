@@ -92,6 +92,7 @@ describe('lib', () => {
         .mockReturnValueOnce('v1.0.0')
         .mockReturnValueOnce('v1.0.0') // run 2
         .mockReturnValueOnce('v1.1.0') // run 3
+        .mockReturnValueOnce('chore(foo): bar release') // get last tag message
         .mockReturnValueOnce('v1.1.0') // drop tag
         .mockReturnValueOnce('v1.1.0') // run 4
         .mockReturnValueOnce('v1.1.0') // run 5
@@ -104,7 +105,7 @@ describe('lib', () => {
         .mockReturnValueOnce({name: 'pijma'}) // landing
 
       const modifiedPacks = ['@qiwi/pijma-core', '@qiwi/pijma-mobile']
-      const [res1, res2, res3, res4, res5] = [rh(), rh(), rh(), rh(), rh()]
+      const [res1, res2, res3, res4] = [rh(), rh(), rh(), rh()]
 
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/count_all_packs.sh')}`)
@@ -112,8 +113,8 @@ describe('lib', () => {
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag_message.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/drop_last_tag.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
 
       expect(res1).toEqual({
@@ -168,7 +169,20 @@ describe('lib', () => {
         package: '@qiwi/pijma-app'
       })
 
-      expect(res5).toEqual({
+      expect(fs.readFileSync(PATH, {encoding: 'utf8'})).toBe(JSON.stringify({
+        tag: 'v1.0.0',
+        modifiedPacks,
+        modified: 2,
+        total: 5,
+        processed: 2,
+        run: 4,
+        reverted: [{
+          tag: 'v1.1.0',
+          message: 'chore(foo): bar release'
+        }]
+      }))
+
+      expect(rh()).toEqual({
         tag: 'v1.1.0',
         modifiedPacks,
         modified: 2,
@@ -180,6 +194,9 @@ describe('lib', () => {
         isModified: false,
         package: 'pijma'
       })
+
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
+      expect(fs.existsSync(PATH)).toBeFalsy()
     })
 
     it('when `dryRun` passed handler works as analyser', () => {
