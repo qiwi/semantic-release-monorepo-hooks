@@ -1,4 +1,5 @@
 const readPkg = require('read-pkg')
+const semver = require('semver')
 const sh = require('./sh')
 const store = require('./store')
 const log = console.log.bind(console, '[release-hooks]:')
@@ -70,4 +71,8 @@ function handleRelease (temp, currentTag) {
 
     log('drop redundant release', 'tag=', tag, 'message=', message)
   }
+}
+
+function getHighestRevertedTag(temp) {
+
 }

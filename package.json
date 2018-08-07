@@ -54,7 +54,9 @@
     ],
     "ignore": []
   },
-  "dependencies": {},
+  "dependencies": {
+    "semver": "^5.5.0"
+  },
   "release": {
     "branch": "master",
     "verifyConditions": [
