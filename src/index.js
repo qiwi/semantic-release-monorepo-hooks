@@ -52,13 +52,6 @@ function saveTemp (temp) {
   }
 }
 
-function dropLastTag () {
-  const tag = sh.dropLastTag()
-  log('drop tag', tag)
-
-  return tag
-}
-
 function handleRelease (temp, currentTag) {
   if (temp.tag !== currentTag) {
     const message = sh.getLastTagMessage()
@@ -71,8 +64,4 @@ function handleRelease (temp, currentTag) {
 
     log('drop redundant release', 'tag=', tag, 'message=', message)
   }
-}
-
-function getHighestRevertedTag(temp) {
-
 }

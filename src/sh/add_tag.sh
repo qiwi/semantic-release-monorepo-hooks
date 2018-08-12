@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo $1 $2
+echo $(git tag -a $1 -m $2)

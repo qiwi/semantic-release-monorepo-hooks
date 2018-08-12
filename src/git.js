@@ -3,14 +3,32 @@ const semver = require('semver')
 
 module.exports = {
   addTag,
+  getLastTag,
+  getLastTagMessage,
+  getLastRelease,
   dropLastTag,
   getHighestReleaseVersion,
   joinMessages,
   joinReleases
 }
 
-function addTag (commit, tag, message) {
+function addTag (tag, message) {
+  return sh.addTag(tag, message)
+}
 
+function getLastTag () {
+  return sh.getLastTag()
+}
+
+function getLastTagMessage () {
+  return sh.getLastTagMessage()
+}
+
+function getLastRelease () {
+  return {
+    tag: getLastTag(),
+    message: getLastTagMessage()
+  }
 }
 
 function dropLastTag () {
