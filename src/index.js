@@ -1,13 +1,12 @@
 const readPkg = require('read-pkg')
-const semver = require('semver')
-const sh = require('./sh')
+const git = require('./git')
 const store = require('./store')
 const log = console.log.bind(console, '[release-hooks]:')
 
 module.exports = function (dryRun) {
   const name = readPkg.sync().name
   const temp = store.get()
-  const tag = sh.getLastTag()
+  const tag = git.getLastTag()
   const isModified = temp.modifiedPacks.indexOf(name) !== -1
 
   if (!dryRun) {
@@ -54,14 +53,10 @@ function saveTemp (temp) {
 
 function handleRelease (temp, currentTag) {
   if (temp.tag !== currentTag) {
-    const message = sh.getLastTagMessage()
-    const tag = sh.dropLastTag()
+    const release = git.dropLastRelease()
 
-    temp.reverted.push({
-      tag,
-      message
-    })
+    temp.reverted.push(release)
 
-    log('drop redundant release', 'tag=', tag, 'message=', message)
+    log('drop redundant release', 'tag=', release.tag, 'message=', release.message)
   }
 }

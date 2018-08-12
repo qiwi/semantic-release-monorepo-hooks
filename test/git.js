@@ -35,7 +35,7 @@ describe('git', () => {
         message: 'foo\n'
       })
 
-      git.dropLastTag()
+      git.dropLastRelease()
     })
   })
 })

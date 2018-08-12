@@ -6,7 +6,7 @@ module.exports = {
   getLastTag,
   getLastTagMessage,
   getLastRelease,
-  dropLastTag,
+  dropLastRelease,
   getHighestReleaseVersion,
   joinMessages,
   joinReleases
@@ -31,7 +31,7 @@ function getLastRelease () {
   }
 }
 
-function dropLastTag () {
+function dropLastRelease () {
   const message = sh.getLastTagMessage()
   const tag = sh.dropLastTag()
 
