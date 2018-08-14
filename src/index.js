@@ -3,14 +3,14 @@ const git = require('./git')
 const store = require('./store')
 const log = console.log.bind(console, '[release-hooks]:')
 
-module.exports = function (dryRun) {
+module.exports = function (dryRun, protectTemp) {
   const name = readPkg.sync().name
   const temp = store.get()
   const tag = git.getLastTag()
   const isModified = temp.modifiedPacks.indexOf(name) !== -1
 
   if (!dryRun) {
-    process(temp, tag, isModified)
+    process(temp, tag, isModified, protectTemp)
   }
 
   const res = {
@@ -31,7 +31,7 @@ module.exports = function (dryRun) {
   return res
 }
 
-function process (temp, tag, isModified) {
+function process (temp, tag, isModified, protectTemp) {
   temp.run += 1
 
   if (isModified) {
@@ -40,14 +40,14 @@ function process (temp, tag, isModified) {
     handleRelease(temp, tag)
   }
 
-  saveTemp(temp)
+  saveTemp(temp, protectTemp)
 }
 
-function saveTemp (temp) {
-  if (temp.run === temp.total) {
+function saveTemp (temp, protectTemp) {
+  store.save(temp)
+
+  if (temp.run === temp.total && !protectTemp) {
     store.unlink()
-  } else {
-    store.save(temp)
   }
 }
 
