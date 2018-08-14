@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.2.0...v2.3.0) (2018-08-14)
+
+
+### Features
+
+* add `protectTemp` option ([6bba734](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/6bba734))
+
 # [2.2.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.1.1...v2.2.0) (2018-08-06)
 
 
