@@ -8,6 +8,7 @@
     "CHANGELOG.md",
     "src/"
   ],
+  "license": "MIT",
   "keywords": [
     "monorepo hooks",
     "semantic release lerna",
@@ -26,15 +27,15 @@
     "lint": "standard src/**/*.js test/**/*.js"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^2.1.1",
-    "@semantic-release/git": "^6.0.1",
-    "@semantic-release/github": "^4.4.1",
-    "@semantic-release/npm": "^3.4.0",
+    "@semantic-release/changelog": "^3.0.0",
+    "@semantic-release/git": "^7.0.1",
+    "@semantic-release/github": "^5.0.2",
+    "@semantic-release/npm": "^5.0.2",
     "codeclimate-test-reporter": "^0.5.0",
     "coveralls": "^3.0.2",
-    "jest": "^23.4.1",
-    "mock-fs": "^4.5.0",
-    "semantic-release": "^15.7.1",
+    "jest": "^23.5.0",
+    "mock-fs": "^4.6.0",
+    "semantic-release": "^15.9.8",
     "standard": "^11.0.1"
   },
   "standard": {

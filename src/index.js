@@ -60,3 +60,5 @@ function handleRelease (temp, currentTag) {
     log('drop redundant release', 'tag=', release.tag, 'message=', release.message)
   }
 }
+
+function postrelease () {}
