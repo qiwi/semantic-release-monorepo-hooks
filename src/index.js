@@ -1,9 +1,11 @@
 const readPkg = require('read-pkg')
 const git = require('./git')
 const store = require('./store')
-const log = console.log.bind(console, '[release-hooks]:')
+const log = require('./log')
 
-module.exports = function (dryRun, protectTemp) {
+const hooks = function (dryRun, protectTemp) {
+  log('hook `before each` thrown')
+
   const name = readPkg.sync().name
   const temp = store.get()
   const tag = git.getLastTag()
@@ -61,4 +63,15 @@ function handleRelease (temp, currentTag) {
   }
 }
 
-function postrelease () {}
+hooks.hookBeforeAll = function() {
+  log('hook `before all` thrown')
+}
+hooks.hookBeforeEach = hooks
+hooks.hookAfterAll = function() {
+  log('hook `after all` thrown')
+}
+hooks.hookAfterEach = function() {
+  log('hook `after each` thrown')
+}
+
+module.exports = hooks // Legacy

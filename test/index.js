@@ -3,11 +3,21 @@ const fs = require('fs')
 const cp = require('child_process')
 const readPkg = require('read-pkg')
 const rh = require('../src')
+const {
+  hookBeforeAll,
+  hookBeforeEach,
+  hookAfterAll,
+  hookAfterEach
+} = rh
 const PATH = path.resolve(__dirname, '../src/count.tmp')
 
 describe('lib', () => {
-  it('exposes function as entry point', () => {
+  it('exposes helpers', () => {
     expect(rh).toEqual(expect.any(Function))
+    expect(hookBeforeAll).toEqual(expect.any(Function))
+    expect(hookBeforeEach).toEqual(expect.any(Function))
+    expect(hookAfterAll).toEqual(expect.any(Function))
+    expect(hookAfterEach).toEqual(expect.any(Function))
   })
 
   describe('hooks `semantic release monorepo` flow', () => {
