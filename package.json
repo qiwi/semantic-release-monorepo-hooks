@@ -20,8 +20,7 @@
   },
   "scripts": {
     "test": "npm run lint && npm run jest",
-    "test_with_report": "npm test && npm run codeclimate_push && npm run coveralls_push",
-    "codeclimate_push": "codeclimate-test-reporter < ./coverage/lcov.info",
+    "test_with_report": "npm test && npm run coveralls_push",
     "coveralls_push": "cat ./coverage/lcov.info | coveralls",
     "jest": "BABEL_ENV=test NODE_ENV=test jest -w 1 --detectOpenHandles --config jest.config.json",
     "lint": "standard src/**/*.js test/**/*.js"
@@ -31,11 +30,10 @@
     "@semantic-release/git": "^7.0.1",
     "@semantic-release/github": "^5.0.2",
     "@semantic-release/npm": "^5.0.2",
-    "codeclimate-test-reporter": "^0.5.0",
     "coveralls": "^3.0.2",
     "jest": "^23.5.0",
     "mock-fs": "^4.6.0",
-    "semantic-release": "^15.9.8",
+    "semantic-release": "^15.9.9",
     "standard": "^11.0.1"
   },
   "standard": {
@@ -56,7 +54,7 @@
     "ignore": []
   },
   "dependencies": {
-    "semver": "^5.5.0"
+    "semver": "^5.5.1"
   },
   "release": {
     "branch": "master",

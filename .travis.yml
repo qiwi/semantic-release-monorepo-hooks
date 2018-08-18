@@ -5,8 +5,17 @@ node_js:
 before_install:
   - npm install -g greenkeeper-lockfile
 
-before_script: greenkeeper-lockfile-update
-after_script: greenkeeper-lockfile-upload
+before_script:
+  - greenkeeper-lockfile-update
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - greenkeeper-lockfile-upload
+  - ./cc-test-reporter format-coverage -t lcov ./coverage/lcov.info
+  - ./cc-test-reporter upload-coverage
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 install:
   - npm install
