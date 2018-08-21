@@ -4,33 +4,12 @@ const store = require('./store')
 const log = require('./log')
 
 const hooks = function (dryRun, protectTemp) {
-  log('hook `before each` thrown')
+  log(`
+    WARNING legacy "combohooks" will be dropped in next major release.
+    Use more specific steps instead: hookBeforeAll, hookBeforeEach, hookAfterAll, hookAfterEach
+  `)
 
-  const name = readPkg.sync().name
-  const temp = store.get()
-  const tag = git.getLastTag()
-  const isModified = temp.modifiedPacks.indexOf(name) !== -1
-
-  if (!dryRun) {
-    process(temp, tag, isModified, protectTemp)
-  }
-
-  const res = {
-    isModified,
-    isLastModified: isModified && temp.processed === temp.modified,
-    isLastRun: temp.run === temp.total,
-    total: temp.total,
-    processed: temp.processed,
-    modified: temp.modified,
-    modifiedPacks: temp.modifiedPacks,
-    package: name,
-    tag,
-    run: temp.run
-  }
-
-  log(res)
-
-  return res
+  return hooks.hookBeforeEach(dryRun, protectTemp)
 }
 
 function process (temp, tag, isModified, protectTemp) {
@@ -66,7 +45,35 @@ function handleRelease (temp, currentTag) {
 hooks.hookBeforeAll = function() {
   log('hook `before all` thrown')
 }
-hooks.hookBeforeEach = hooks
+hooks.hookBeforeEach = function(dryRun, protectTemp) {
+  log('hook `before each` thrown')
+
+  const name = readPkg.sync().name
+  const temp = store.get()
+  const tag = git.getLastTag()
+  const isModified = temp.modifiedPacks.indexOf(name) !== -1
+
+  if (!dryRun) {
+    process(temp, tag, isModified, protectTemp)
+  }
+
+  const res = {
+    isModified,
+    isLastModified: isModified && temp.processed === temp.modified,
+    isLastRun: temp.run === temp.total,
+    total: temp.total,
+    processed: temp.processed,
+    modified: temp.modified,
+    modifiedPacks: temp.modifiedPacks,
+    package: name,
+    tag,
+    run: temp.run
+  }
+
+  log(res)
+
+  return res
+}
 hooks.hookAfterAll = function() {
   log('hook `after all` thrown')
 }
