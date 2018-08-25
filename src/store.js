@@ -3,6 +3,9 @@ const sh = require('./sh')
 const {TEMP} = require('./path')
 
 module.exports = {
+  init() {
+
+  },
   get () {
     if (fs.existsSync(TEMP)) {
       return JSON.parse(fs.readFileSync(TEMP, {encoding: 'utf8'}))
