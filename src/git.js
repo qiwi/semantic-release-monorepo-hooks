@@ -58,3 +58,4 @@ function getHighestReleaseVersion () {
 function joinMessages () {
   return [].slice.call(arguments).join('  ') // NOTE markdown break
 }
+

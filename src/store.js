@@ -3,12 +3,12 @@ const sh = require('./sh')
 const {TEMP} = require('./path')
 
 module.exports = {
-  init() {
-
+  ready() {
+    return fs.existsSync(TEMP)
   },
-  get () {
-    if (fs.existsSync(TEMP)) {
-      return JSON.parse(fs.readFileSync(TEMP, {encoding: 'utf8'}))
+  init() {
+    if (this.ready()) {
+      throw new Error('Temp file is already exists')
     }
 
     const tag = sh.getLastTag()
@@ -17,8 +17,7 @@ module.exports = {
     const names = _names.length
       ? _names.replace(/["\n]/g, '').split(' ')
       : []
-
-    return {
+    const data = {
       tag,
       modifiedPacks: names,
       modified: names.length,
@@ -27,12 +26,23 @@ module.exports = {
       run: 0,
       reverted: []
     }
+
+    this.save(data)
+
+    return data
+  },
+  get () {
+    if (this.ready()) {
+      return JSON.parse(fs.readFileSync(TEMP, {encoding: 'utf8'}))
+    }
+
+    throw new Error('Temp storage is not initialized. Trigger `hookBeforeAll` before the current step')
   },
   save (data) {
     fs.writeFileSync(TEMP, JSON.stringify(data))
   },
   unlink () {
-    if (fs.existsSync(TEMP)) {
+    if (this.ready()) {
       fs.unlinkSync(TEMP)
     }
   }

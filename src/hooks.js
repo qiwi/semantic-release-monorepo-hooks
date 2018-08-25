@@ -29,23 +29,29 @@ function handleRelease (temp, currentTag) {
 
     temp.reverted.push(release)
 
-    log('drop redundant release', 'tag=', release.tag, 'message=', release.message)
+    log('drop release', 'tag=', release.tag, 'message=', release.message)
   }
 }
 
-const hookBeforeAll = function() {
+const hookBeforeAll = function(force) {
   log('hook `before all` thrown')
+
+  return store.init(force)
 }
+
 const hookBeforeEach = function(dryRun, protectTemp) {
   log('hook `before each` thrown')
 
   const name = readPkg.sync().name
   const temp = store.get()
-  const tag = git.getLastTag()
   const isModified = temp.modifiedPacks.indexOf(name) !== -1
 
   if (!dryRun) {
-    process(temp, tag, isModified, protectTemp)
+    temp.run += 1
+
+    if (isModified) {
+      temp.processed += 1
+    }
   }
 
   const res = {
@@ -57,19 +63,52 @@ const hookBeforeEach = function(dryRun, protectTemp) {
     modified: temp.modified,
     modifiedPacks: temp.modifiedPacks,
     package: name,
-    tag,
     run: temp.run
   }
 
   log(res)
 
+  store.save(temp)
+
   return res
 }
-const hookAfterAll = function() {
-  log('hook `after all` thrown')
-}
-const hookAfterEach = function() {
+
+const hookAfterEach = function(dryRun) {
   log('hook `after each` thrown')
+
+  if (dryRun) {
+    return
+  }
+
+  const temp = store.get()
+  const tag = git.getLastTag()
+
+  if (temp.tag !== tag) {
+    const release = git.dropLastRelease()
+
+    temp.reverted.push(release)
+
+    log('drop release', 'tag=', release.tag, 'message=', release.message)
+  }
+
+  store.save(temp)
+}
+
+const hookAfterAll = function(dryRun) {
+  log('hook `after all` thrown')
+
+  if (store.ready()) {
+    hookAfterEach(dryRun)
+    const temp = store.get()
+
+    if (temp.reverted.length > 0) {
+      const {tag, message} = git.joinReleases(temp.reverted)
+
+      git.addTag(tag, message)
+    }
+  }
+
+  store.unlink()
 }
 
 module.exports = {
