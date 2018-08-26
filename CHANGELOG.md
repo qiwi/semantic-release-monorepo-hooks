@@ -1,3 +1,10 @@
+## [2.4.3](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.4.2...v2.4.3) (2018-08-26)
+
+
+### Bug Fixes
+
+* **git:** add quotes to passed args ([9ed53c9](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/9ed53c9))
+
 ## [2.4.2](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.4.1...v2.4.2) (2018-08-26)
 
 
