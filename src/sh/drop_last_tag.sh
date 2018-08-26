@@ -1,6 +1,7 @@
 #!/bin/bash
 
-sh $( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"/git_prepare_remote.sh"
+#sh $( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"/git_prepare_remote.sh"
+sh $(dirname "$0")"/git_prepare_remote.sh"
 
 tag=$(git describe --abbrev=0 --tags)
 
