@@ -9,7 +9,8 @@ module.exports = {
   dropLastRelease,
   getHighestReleaseVersion,
   joinMessages,
-  joinReleases
+  joinReleases,
+  createRelease
 }
 
 function addTag (tag, message) {
@@ -60,3 +61,6 @@ function joinMessages () {
   return [].slice.call(arguments).join('  ') // NOTE markdown break
 }
 
+function createRelease(tag, message) {
+  return sh.createRelease(tag, message)
+}

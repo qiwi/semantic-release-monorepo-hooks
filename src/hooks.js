@@ -105,6 +105,7 @@ const hookAfterAll = function(dryRun) {
       const {tag, message} = git.joinReleases(temp.reverted)
 
       git.addTag(tag, message)
+      git.createRelease(tag, message)
     }
   }
 
