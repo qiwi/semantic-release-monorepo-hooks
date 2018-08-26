@@ -1,3 +1,10 @@
+## [2.4.2](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.4.1...v2.4.2) (2018-08-26)
+
+
+### Bug Fixes
+
+* **sh:** add quotes for git tag message arg ([1da5121](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/1da5121))
+
 ## [2.4.1](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.4.0...v2.4.1) (2018-08-26)
 
 
