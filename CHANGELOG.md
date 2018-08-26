@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.5.0...v2.5.1) (2018-08-26)
+
+
+### Bug Fixes
+
+* **sh:** quotes escaping ([13a52b9](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/13a52b9))
+
 # [2.5.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.4.3...v2.5.0) (2018-08-26)
 
 
