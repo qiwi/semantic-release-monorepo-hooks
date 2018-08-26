@@ -8,5 +8,5 @@ module.exports = {
   dropLastTag () { return cp.execSync(`sh ${path.DROP_TAG_SH}`).toString() },
   countAllPacks () { return +cp.execSync(`sh ${path.COUNT_ALL_PACKS_SH}`).toString() },
   getModifiedPacks () { return cp.execSync(`sh ${path.MODIFIED_PACKS_NAMES_SH}`).toString() },
-  createRelease (tag, message) { return cp.execSync(`sh ${path.CREATE_RELEASE_SH} "${tag}" "${message}"`).toString() }
+  createRelease (data) { return cp.execSync(`sh ${path.CREATE_RELEASE_SH} '${data}'`).toString() }
 }

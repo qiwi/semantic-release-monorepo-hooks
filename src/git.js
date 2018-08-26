@@ -1,5 +1,6 @@
 const sh = require('./sh')
 const semver = require('semver')
+const log = require('./log')
 
 module.exports = {
   addTag,
@@ -62,5 +63,16 @@ function joinMessages () {
 }
 
 function createRelease(tag, message) {
-  return sh.createRelease(tag, message)
+  const data = JSON.stringify({
+    "tag_name": tag,
+    "target_commitish": "master",
+    "name": tag,
+    "body": message,
+    "draft": false,
+    "prerelease": false
+  })
+
+  log('create github release', data)
+
+  return sh.createRelease(data)
 }
