@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.4.3...v2.5.0) (2018-08-26)
+
+
+### Features
+
+* **hookAfterAll:** add github release creation substep ([4554f5a](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/4554f5a))
+
 ## [2.4.3](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.4.2...v2.4.3) (2018-08-26)
 
 
