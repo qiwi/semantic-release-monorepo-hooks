@@ -33,7 +33,8 @@ function getLastRelease () {
 
 function dropLastRelease () {
   const message = sh.getLastTagMessage()
-  const tag = sh.dropLastTag()
+  const re = /.*(v\d+\.\d+\.\d+).*/
+  const tag = re.exec(sh.dropLastTag())[1]
 
   return {
     tag,

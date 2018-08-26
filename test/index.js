@@ -102,9 +102,10 @@ describe('lib', () => {
         .mockReturnValueOnce('v1.1.0') // run 3 afterEach
         .mockReturnValueOnce('chore(foo): bar release') // get last tag message
         .mockReturnValueOnce('v1.1.0') // drop tag
-        .mockReturnValueOnce('v1.1.0') // run 4
+        .mockReturnValueOnce('v1.0.1') // run 4
         .mockReturnValueOnce('chore(baz): qux release') // get last tag message
-        .mockReturnValueOnce('v1.1.0') // drop tag
+        .mockReturnValueOnce(`Deleted tag 'v1.0.1' (was 17f16b0)
+v1.0.1`) // drop tag
         .mockReturnValueOnce('v1.0.0') // run 5
 
       pack
@@ -186,7 +187,7 @@ describe('lib', () => {
           tag: 'v1.1.0',
           message: 'chore(foo): bar release'
         }, {
-          tag: 'v1.1.0',
+          tag: 'v1.0.1',
           message: 'chore(baz): qux release'
         }]
       }))
