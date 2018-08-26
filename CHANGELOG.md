@@ -1,3 +1,11 @@
+## [2.4.1](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.4.0...v2.4.1) (2018-08-26)
+
+
+### Bug Fixes
+
+* handle extended `drop tag` sh response ([601fe59](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/601fe59))
+* **sh:** fix subscript invocation path ([c4cb425](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/c4cb425))
+
 # [2.4.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.3.0...v2.4.0) (2018-08-25)
 
 
