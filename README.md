@@ -61,8 +61,8 @@ It's necessary to lock version due to incompatibility issue of `semantic-release
 deploy:
   provider: script
   skip_cleanup: true
-  script:
-    - yarn lerna exec --concurrency 1 "npx --no-install semantic-release -e semantic-release-monorepo"
+  script
+    - yarn lerna exec --concurrency 1 "npx --no-install semantic-release -e semantic-release-monorepo" && node -e "require('semantic-release-monorepo-hooks').hookAfterAll()"
 ```
 
 ##### 3. Configure `env` vars
