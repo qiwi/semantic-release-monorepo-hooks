@@ -11,7 +11,8 @@ module.exports = {
   getHighestReleaseVersion,
   joinMessages,
   joinReleases,
-  createRelease
+  createRelease,
+  reformat
 }
 
 function addTag (tag, message) {
@@ -54,12 +55,36 @@ function joinReleases (releases) {
   }
 }
 
+function reformat (message) {
+  try {
+    const re = /(Performance Improvements|Features|Bug Fixes)(.+)/i
+    const [commit, link, ...details] = message.split(/#+/g)
+    const changes = details.map(detail => {
+      return re.exec(detail).slice(1).map((v, i) => {
+        return i % 2 === 0
+          ? '###' + v
+          : v
+      }).join('\n')
+    }).join('\n')
+
+    if (!link) {
+      return message
+    }
+
+    return `#${link}
+${changes}
+`
+  } catch (e) {
+    return message
+  }
+}
+
 function getHighestReleaseVersion () {
   return [].slice.call(arguments).sort(semver.rcompare)[0]
 }
 
 function joinMessages () {
-  return [].slice.call(arguments).join('  ') // NOTE markdown break
+  return [].slice.call(arguments).map(reformat).join('  \n') // NOTE markdown break
 }
 
 function createRelease(tag, message) {
