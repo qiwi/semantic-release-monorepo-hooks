@@ -1,3 +1,15 @@
+# [2.6.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.5.1...v2.6.0) (2018-08-31)
+
+
+### Bug Fixes
+
+* **test:** skip flanking test ([cd19a86](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/cd19a86))
+
+
+### Features
+
+* reformat github release comment ([6c79a77](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/6c79a77))
+
 ## [2.5.1](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.5.0...v2.5.1) (2018-08-26)
 
 
