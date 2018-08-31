@@ -44,7 +44,7 @@ describe('git', () => {
     })
   })
 
-  describe('addTag', () => {
+  xdescribe('addTag', () => {
     it('attaches a new tag to the last commit', () => {
       git.addTag('v1111.0.0', 'foo')
 
