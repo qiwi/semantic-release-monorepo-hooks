@@ -62,7 +62,7 @@ function reformat (message) {
     const changes = details.map(detail => {
       return re.exec(detail).slice(1).map((v, i) => {
         return i % 2 === 0
-          ? '###' + v
+          ? '### ' + v
           : v
       }).join('\n')
     }).join('\n')
