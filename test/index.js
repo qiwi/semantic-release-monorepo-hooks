@@ -44,7 +44,7 @@ describe('lib', () => {
         // .mockReturnValueOnce('v1.0.0')
 
       pack
-        .mockReturnValueOnce({name: 'foo'})
+        .mockReturnValueOnce({ name: 'foo' })
 
       const res = rh()
 
@@ -69,7 +69,7 @@ describe('lib', () => {
         // .mockReturnValueOnce('v1.0.0')
 
       pack
-        .mockReturnValueOnce({name: '@qiwi/pijma-core'})
+        .mockReturnValueOnce({ name: '@qiwi/pijma-core' })
 
       const res = rh()
 
@@ -109,11 +109,11 @@ v1.0.1`) // drop tag
         .mockReturnValueOnce('v1.0.0') // run 5
 
       pack
-        .mockReturnValueOnce({name: '@qiwi/pijma-desktop'})
-        .mockReturnValueOnce({name: '@qiwi/pijma-core'})
-        .mockReturnValueOnce({name: '@qiwi/pijma-mobile'})
-        .mockReturnValueOnce({name: '@qiwi/pijma-app'})
-        .mockReturnValueOnce({name: 'pijma'}) // landing
+        .mockReturnValueOnce({ name: '@qiwi/pijma-desktop' })
+        .mockReturnValueOnce({ name: '@qiwi/pijma-core' })
+        .mockReturnValueOnce({ name: '@qiwi/pijma-mobile' })
+        .mockReturnValueOnce({ name: '@qiwi/pijma-app' })
+        .mockReturnValueOnce({ name: 'pijma' }) // landing
 
       const modifiedPacks = ['@qiwi/pijma-core', '@qiwi/pijma-mobile']
       const [res1, res2, res3, res4] = [rh(), rh(), rh(), rh()]
@@ -176,7 +176,7 @@ v1.0.1`) // drop tag
         package: '@qiwi/pijma-app'
       })
 
-      expect(fs.readFileSync(PATH, {encoding: 'utf8'})).toBe(JSON.stringify({
+      expect(fs.readFileSync(PATH, { encoding: 'utf8' })).toBe(JSON.stringify({
         tag: 'v1.0.0',
         modifiedPacks,
         modified: 2,
@@ -221,7 +221,7 @@ v1.0.1`) // drop tag
       fs.writeFileSync(PATH, JSON.stringify(temp))
 
       pack
-        .mockReturnValueOnce({name: 'foo'})
+        .mockReturnValueOnce({ name: 'foo' })
 
       exec
         .mockReturnValueOnce('v1.0.1')
@@ -233,7 +233,7 @@ v1.0.1`) // drop tag
       expect(res.isLastRun).toBeFalsy()
       expect(res.processed).toBe(0)
 
-      expect(fs.readFileSync(PATH, {encoding: 'utf8'})).toBe(JSON.stringify(temp))
+      expect(fs.readFileSync(PATH, { encoding: 'utf8' })).toBe(JSON.stringify(temp))
     })
 
     xit('unlinks tempfile on the last run', () => {
@@ -245,13 +245,13 @@ v1.0.1`) // drop tag
         processed: 2,
         run: 5,
         reverted: [
-          {tag: 'v1.1.0', message: 'Foo release'},
-          {tag: 'v1.0.1', message: 'Bar release'}
+          { tag: 'v1.1.0', message: 'Foo release' },
+          { tag: 'v1.0.1', message: 'Bar release' }
         ]
       }))
 
       pack
-        .mockReturnValueOnce({name: 'baz'})
+        .mockReturnValueOnce({ name: 'baz' })
 
       exec
         .mockReturnValueOnce('v1.0.0')

@@ -19,13 +19,13 @@ describe('git', () => {
       ]
 
       expect(git.joinMessages(...messages)).toBe(`# [@qiwi/uniconfig-v1.13.8](https://github.com/qiwi/uniconfig/compare/v1.13.7...v1.13.8) (2018-08-26) 
-###Bug Fixes
+### Bug Fixes
  CHANGELOG.md2 README.md dist package.json src **build:** some fixes ([cd38287](https://github.com/qiwi/uniconfig/commit/cd38287)) 
-###Performance Improvements
+### Performance Improvements
  CHANGELOG.md README.md dist package.json src **build:** tech release ([cd38287](https://github.com/qiwi/uniconfig/commit/cd38287))
   
 # [@qiwi/uniconfig-plugin-yaml-v1.13.8](https://github.com/qiwi/uniconfig/compare/v1.13.7...v1.13.8) (2018-08-26) 
-###Performance Improvements
+### Performance Improvements
  LICENSE2 README.md coverage docma.json flow-coverage flow-typed jest.config.json lerna.json node_modules package.json packages scripts yarn.lock **build:** tech release ([cd38287](https://github.com/qiwi/uniconfig/commit/cd38287))
 `)
     })
@@ -34,9 +34,9 @@ describe('git', () => {
   describe('joinReleases', () => {
     it('squashes several releases to single one', () => {
       expect(git.joinReleases([
-        {tag: 'v1.0.1\n', message: 'foo'},
-        {tag: 'v2.1.0', message: 'bar'},
-        {tag: 'v2.0.1\r\n', message: 'baz'}
+        { tag: 'v1.0.1\n', message: 'foo' },
+        { tag: 'v2.1.0', message: 'bar' },
+        { tag: 'v2.0.1\r\n', message: 'baz' }
       ])).toEqual({
         tag: 'v2.1.0',
         message: 'foo  \nbar  \nbaz'
