@@ -9,5 +9,6 @@ module.exports = {
   CREATE_RELEASE_SH: resolve('./sh/create_release.sh'),
   DROP_TAG_SH: resolve('./sh/drop_last_tag.sh'),
   LAST_TAG_MESSAGE_SH: resolve('./sh/get_last_tag_message.sh'),
+  LAST_TAGGED_COMMIT_MESSAGE_SH: resolve('./sh/get_last_tagged_commit_message.sh'),
   MODIFIED_PACKS_NAMES_SH: resolve('./sh/get_modified_packs.sh')
 }

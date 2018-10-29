@@ -124,7 +124,7 @@ v1.0.1`) // drop tag
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
-      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag_message.sh')}`)
+      expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tagged_commit_message.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/drop_last_tag.sh')}`)
       expect(exec).toHaveBeenCalledWith(`sh ${path.resolve(__dirname, '../src/sh/get_last_tag.sh')}`)
 

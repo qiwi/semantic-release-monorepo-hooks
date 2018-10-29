@@ -6,6 +6,7 @@ module.exports = {
   addTag,
   getLastTag,
   getLastTagMessage,
+  getLastTaggedCommitMessage,
   getLastRelease,
   dropLastRelease,
   getHighestReleaseVersion,
@@ -23,6 +24,10 @@ function getLastTag () {
   return sh.getLastTag()
 }
 
+function getLastTaggedCommitMessage() {
+  return sh.getLastTaggedCommitMessage()
+}
+
 function getLastTagMessage () {
   return sh.getLastTagMessage()
 }
@@ -30,12 +35,12 @@ function getLastTagMessage () {
 function getLastRelease () {
   return {
     tag: getLastTag(),
-    message: getLastTagMessage()
+    message: getLastTaggedCommitMessage()
   }
 }
 
 function dropLastRelease () {
-  const message = sh.getLastTagMessage()
+  const message = sh.getLastTaggedCommitMessage()
   const re = /.*(v\d+\.\d+\.\d+).*/
   const tag = re.exec(sh.dropLastTag())[1]
 
