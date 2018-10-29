@@ -1,5 +1,5 @@
 # semantic-release-monorepo-hooks
-Workaround to force `semantic-release-monorepo` multipublishing.
+Workaround to handle `semantic-release-monorepo` multipublishing.
 
 ## Problem
 1) `semantic-release` does not support `lerna`-based repos aka `monorepos` out of box.
@@ -10,19 +10,26 @@ Workaround to force `semantic-release-monorepo` multipublishing.
 
 ## Install
 ```bash
-  npm i -D semantic-release@15.6.3
+  npm i -D semantic-release
   npm i -D semantic-release-monorepo
   npm i -D semantic-release-monorepo-hooks
 ```
-##### Note
-It's necessary to lock version due to incompatibility issue of `semantic-release-plugin-decorators`: it looks to be broken on the latest `semantic-release`.
-```bash
-[Semantic release]: An error occurred while running semantic-release: { TypeError: Expected `moduleId` to be of type `string`, got `object`
- at resolveFrom (/home/travis/build/qiwi/travis-toolkit/node_modules/resolve-from/index.js:11:9)
- at module.exports (/home/travis/build/qiwi/travis-toolkit/node_modules/resolve-from/index.js:34:41)
- at module.exports (/home/travis/build/qiwi/travis-toolkit/node_modules/import-from/index.js:4:49)
- at requirePlugin (/home/travis/build/qiwi/travis-toolkit/node_modules/semantic-release-plugin-decorators/src/index.js:4:33)
- at resolvePluginFn (/home/travis/build/qiwi/travis-toolkit/node_modules/semantic-release-plugin-decorators/src/index.js:18:18)
+
+and plugins:
+```
+"devDependencies": {
+    "@semantic-release/changelog": "^3.0.1",
+    "@semantic-release/commit-analyzer": "^6.1.0",
+    "@semantic-release/git": "7.0.5",
+    "@semantic-release/github": "5.2.1",
+    "@semantic-release/npm": "5.0.5",
+    "@semantic-release/release-notes-generator": "7.1.2",
+    "lerna": "^3.4.3",
+    "semantic-release": "15.10.6",
+    "semantic-release-monorepo": "6.1.1",
+    "semantic-release-monorepo-hooks": "2.6.2",
+    "semantic-release-plugin-decorators": "^2.0.0"
+  }
 ```
 
 ## Configure
@@ -31,28 +38,32 @@ It's necessary to lock version due to incompatibility issue of `semantic-release
   const hooks = require('semantic-release-monorepo-hooks')
   const output = hooks()
   
-  const publish = output.isLastModified
-    ? [
-      '@semantic-release/github',
-      '@semantic-release/npm'
-    ]
-    : [
-      '@semantic-release/npm'
-    ]
-  
   module.exports = {
     branch: 'master',
     tagFormat: 'v${version}',
     prepare: [
       '@semantic-release/changelog',
       '@semantic-release/npm',
+      {
+        'path': '@semantic-release/git',
+        'message': 'chore(' + output.package + '): release ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
+      }
+    ],
+    publish: [
+      '@semantic-release/npm'
+    ],
+    verifyConditions: [
+      '@semantic-release/npm',
       '@semantic-release/git'
     ],
-    publish: publish,
-    verifyConditions: ['@semantic-release/npm', '@semantic-release/github'],
-    /* verifyRelease: ['@semantic-release/npm', '@semantic-release/github']
-      .map(require)
-      .map(x => x.verifyConditions), */
+    monorepo: {
+      analyzeCommits: [
+        '@semantic-release/commit-analyzer'
+      ],
+      generateNotes: [
+        '@semantic-release/release-notes-generator'
+      ]
+    }
   };
 ```
 
@@ -61,7 +72,7 @@ It's necessary to lock version due to incompatibility issue of `semantic-release
 deploy:
   provider: script
   skip_cleanup: true
-  script
+  script:
     - yarn lerna exec --concurrency 1 "npx --no-install semantic-release -e semantic-release-monorepo" && node -e "require('semantic-release-monorepo-hooks').hookAfterAll()"
 ```
 
