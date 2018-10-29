@@ -1,3 +1,10 @@
+## [2.6.2](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.6.1...v2.6.2) (2018-10-29)
+
+
+### Performance Improvements
+
+* fetch release notes from commit message instead of tag body ([da635a5](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/da635a5)), closes [#4](https://github.com/qiwi/semantic-release-monorepo-hooks/issues/4)
+
 ## [2.6.1](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.6.0...v2.6.1) (2018-09-09)
 
 
