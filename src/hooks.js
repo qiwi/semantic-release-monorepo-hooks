@@ -111,7 +111,12 @@ const hookAfterAll = function(dryRun) {
       git.createRelease(tag, message)
 
       // Post release steps. For example, `gh-pages`
-      get(config, 'monorepoHooks.afterAll.cmd', []).forEach(exec.run)
+      const cmd = get(config, 'monorepoHooks.afterAll.cmd', [])
+      if (cmd.length) {
+        log('post-release cmd=', cmd)
+
+        cmd.forEach(exec.run)
+      }
     }
   }
 
