@@ -1,3 +1,12 @@
+# [2.7.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.6.2...v2.7.0) (2018-11-18)
+
+
+### Features
+
+* add cmd runner ([b6ac16c](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/b6ac16c))
+* add release config reader ([027e6e6](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/027e6e6))
+* provide optional post-release command execution ([c8bc4fb](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/c8bc4fb))
+
 ## [2.6.2](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.6.1...v2.6.2) (2018-10-29)
 
 
