@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.7.0...v2.8.0) (2018-11-18)
+
+
+### Features
+
+* add logging for post-release steps ([b384d56](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/b384d56))
+
 # [2.7.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.6.2...v2.7.0) (2018-11-18)
 
 
