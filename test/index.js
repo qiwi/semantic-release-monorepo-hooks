@@ -12,6 +12,8 @@ const {
 const PATH = path.resolve(__dirname, '../src/count.tmp')
 
 describe('lib', () => {
+  afterAll(() => jest.resetAllMocks())
+
   it('exposes helpers', () => {
     expect(rh).toEqual(expect.any(Function))
     expect(hookBeforeAll).toEqual(expect.any(Function))

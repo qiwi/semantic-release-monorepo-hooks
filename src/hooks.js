@@ -2,6 +2,9 @@ const readPkg = require('read-pkg')
 const git = require('./git')
 const store = require('./store')
 const log = require('./log')
+const config = require('./config')
+const exec = require('./exec')
+const {get} = require('lodash')
 
 function process (temp, tag, isModified, protectTemp) {
   temp.run += 1
@@ -106,6 +109,9 @@ const hookAfterAll = function(dryRun) {
 
       git.addTag(tag, message)
       git.createRelease(tag, message)
+
+      // Post release steps. For example, `gh-pages`
+      get(config, 'monorepoHooks.afterAll.cmd', []).forEach(exec.run)
     }
   }
 

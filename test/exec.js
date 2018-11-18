@@ -1,8 +1,16 @@
 const exec = require('../src/exec')
+const cp = require('child_process')
 
 describe('exec', () => {
+  const execSync = jest.spyOn(cp, 'execSync')
+  execSync
+    .mockReturnValueOnce('foobar')
+    .mockImplementationOnce(() => {
+      throw new Error('/bin/sh: foo: command not found')
+    })
+
   it('runs cmd, returns result', () => {
-    expect(exec.run('echo "foo"')).toBe('foo')
+    expect(exec.run('echo "foobar"')).toBe('foobar')
   })
 
   it('catches error otherwise', () => {
