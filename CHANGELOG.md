@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.8.0...v2.9.0) (2018-11-19)
+
+
+### Features
+
+* get config from package.json#monorepoHooks ([3abf2df](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/3abf2df))
+
 # [2.8.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.7.0...v2.8.0) (2018-11-18)
 
 
