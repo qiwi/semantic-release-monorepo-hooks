@@ -3,12 +3,14 @@ const cp = require('child_process')
 
 module.exports = {
   run(cmd) {
-    try {
-      return cp.execSync('' + cmd).toString().trim()
+    log('cmd=', cmd)
 
+    try {
+      const res = cp.execSync('' + cmd).toString().trim()
+      log('res=', res)
+      return res
     } catch (err) {
       log('execution failed')
-      log('cmd=', cmd)
       log('err=', err)
     }
   }
