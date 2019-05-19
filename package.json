@@ -26,14 +26,14 @@
     "lint": "standard src/**/*.js test/**/*.js"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^3.0.1",
-    "@semantic-release/git": "^7.0.5",
-    "@semantic-release/github": "^5.2.1",
-    "@semantic-release/npm": "^5.1.1",
-    "coveralls": "^3.0.2",
-    "jest": "^23.6.0",
-    "mock-fs": "^4.7.0",
-    "semantic-release": "^15.12.0",
+    "@semantic-release/changelog": "^3.0.2",
+    "@semantic-release/git": "^7.0.8",
+    "@semantic-release/github": "^5.2.10",
+    "@semantic-release/npm": "^5.1.8",
+    "coveralls": "^3.0.3",
+    "jest": "^24.8.0",
+    "mock-fs": "^4.9.0",
+    "semantic-release": "^15.13.12",
     "standard": "^12.0.1"
   },
   "standard": {
@@ -54,7 +54,7 @@
     "ignore": []
   },
   "dependencies": {
-    "app-root-path": "^2.1.0",
+    "app-root-path": "^2.2.1",
     "lodash": "^4.17.11"
   },
   "release": {
