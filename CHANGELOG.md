@@ -1,3 +1,10 @@
+## [2.9.2](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.1...v2.9.2) (2019-05-28)
+
+
+### Bug Fixes
+
+* **count_all_packs:** add missed $ and remove redundant reassignment ([44a4421](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/44a4421))
+
 ## [2.9.1](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.0...v2.9.1) (2018-11-19)
 
 
