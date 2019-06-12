@@ -1,3 +1,10 @@
+## [2.9.3](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.2...v2.9.3) (2019-06-12)
+
+
+### Bug Fixes
+
+* **deps:** add explicit read-pkg and semver dependencies ([d862695](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/d862695))
+
 ## [2.9.2](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.1...v2.9.2) (2019-05-28)
 
 
