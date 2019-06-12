@@ -55,7 +55,9 @@
   },
   "dependencies": {
     "app-root-path": "^2.2.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "read-pkg": "^5.1.1",
+    "semver": "^6.1.1"
   },
   "release": {
     "branch": "master",
