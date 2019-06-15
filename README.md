@@ -104,3 +104,7 @@ Hooks reverts some effects of previous `semantic-release` run and returns info m
     run: 1
   }
 ```
+
+## Alternatives
+
+Take a look at [multi-semantic-release](https://github.com/dhoulb/multi-semantic-release). With [`--execasync`](https://github.com/dhoulb/multi-semantic-release/pull/2) flag it produces the same effect but in a different way.
