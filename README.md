@@ -2,8 +2,8 @@
 Workaround to handle `semantic-release-monorepo` multipublishing.
 
 ## Problem
-1) `semantic-release` does not support `lerna`-based repos aka `monorepos` out of box.
-2) `semantic-release-monorepo` can not release several packages at once: after the first sub-release it appends a new git version tag, so any next run finds no changes.
+1) [semantic-release](https://github.com/semantic-release/semantic-release) does not support `lerna`-based repos aka `monorepos` out of box.
+2) [semantic-release-monorepo](https://github.com/Updater/semantic-release-monorepo) can not release several packages at once: after the first sub-release it appends a new git version tag, so any next run finds no changes.
 ```bash
 [Semantic release]: Found 0 commits for package *** since last release
 ``` 
@@ -16,8 +16,9 @@ Workaround to handle `semantic-release-monorepo` multipublishing.
 ```
 
 and plugins:
-```
-"devDependencies": {
+```json
+{
+  "devDependencies": {
     "@semantic-release/changelog": "^3.0.1",
     "@semantic-release/commit-analyzer": "^6.1.0",
     "@semantic-release/git": "7.0.5",
@@ -30,6 +31,7 @@ and plugins:
     "semantic-release-monorepo-hooks": "2.6.2",
     "semantic-release-plugin-decorators": "^2.0.0"
   }
+}
 ```
 
 ## Configure
