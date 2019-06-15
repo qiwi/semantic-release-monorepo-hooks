@@ -2,7 +2,7 @@
 Workaround to handle `semantic-release-monorepo` multipublishing.
 
 [![Build Status](https://travis-ci.com/qiwi/semantic-release-monorepo-hooks.svg?branch=master)](https://travis-ci.com/qiwi/semantic-release-monorepo-hooks)
-[![npm (tag)](https://img.shields.io/npm/v/semantic-release-monorepo-hooks/latest.svg)](https://www.npmjs.com/package/@qiwi/semantic-release-monorepo-hooks)
+[![npm (tag)](https://img.shields.io/npm/v/semantic-release-monorepo-hooks/latest.svg)](https://www.npmjs.com/package/semantic-release-monorepo-hooks)
 [![dependencyStatus](https://img.shields.io/david/qiwi/semantic-release-monorepo-hooks.svg?maxAge=300)](https://david-dm.org/qiwi/semantic-release-monorepo-hooks)
 [![Maintainability](https://api.codeclimate.com/v1/badges/74c25847a6bffa1223a4/maintainability)](https://codeclimate.com/github/qiwi/semantic-release-monorepo-hooks/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/74c25847a6bffa1223a4/test_coverage)](https://codeclimate.com/github/qiwi/semantic-release-monorepo-hooks/test_coverage)
