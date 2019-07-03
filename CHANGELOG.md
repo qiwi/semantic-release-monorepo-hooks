@@ -1,3 +1,10 @@
+## [2.9.4](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.3...v2.9.4) (2019-07-03)
+
+
+### Bug Fixes
+
+* correct project root detection ([434c9f4](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/434c9f4)), closes [#9](https://github.com/qiwi/semantic-release-monorepo-hooks/issues/9)
+
 ## [2.9.3](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.2...v2.9.3) (2019-06-12)
 
 
