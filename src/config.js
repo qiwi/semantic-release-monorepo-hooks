@@ -1,14 +1,23 @@
-const reqlib = require('app-root-path').require
+const path = require('path')
+const findGitRoot = require('find-git-root')
 const log = require('./log')
+
+const ROOT = path.resolve(findGitRoot(__dirname), '..')
+const RELEASERC = '.releaserc.js'
+const PACKAGEJSON = 'package.json'
+
 const releaserc = (() => {
+  const releasercPath = path.resolve(ROOT, RELEASERC)
+  const packageJsonPath = path.resolve(ROOT, PACKAGEJSON)
+
   try {
-    return reqlib('/.releaserc.js')
+    return require(releasercPath)
 
   } catch (err) {
-    log('`.releaserc.js` is not found, so `package.json#release` is used instead')
+    log(`'${RELEASERC}' is not found, so '${PACKAGEJSON}#release' will be used instead`)
     log('err=', err)
 
-    const pkg = reqlib('/package.json')
+    const pkg = require(packageJsonPath)
 
     return pkg.release || pkg
   }

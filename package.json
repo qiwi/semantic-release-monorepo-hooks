@@ -6,7 +6,7 @@
   "files": [
     "README.md",
     "CHANGELOG.md",
-    "src/"
+    "src"
   ],
   "license": "MIT",
   "keywords": [
@@ -54,7 +54,7 @@
     "ignore": []
   },
   "dependencies": {
-    "app-root-path": "^2.2.1",
+    "find-git-root": "^1.0.0",
     "lodash": "^4.17.11",
     "read-pkg": "^5.1.1",
     "semver": "^6.1.1"
