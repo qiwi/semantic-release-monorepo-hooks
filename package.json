@@ -27,14 +27,14 @@
   },
   "devDependencies": {
     "@semantic-release/changelog": "^3.0.4",
-    "@semantic-release/git": "^7.0.12",
-    "@semantic-release/github": "^5.4.0",
-    "@semantic-release/npm": "^5.1.9",
-    "coveralls": "^3.0.4",
+    "@semantic-release/git": "^7.0.16",
+    "@semantic-release/github": "^5.4.2",
+    "@semantic-release/npm": "^5.1.13",
+    "coveralls": "^3.0.5",
     "jest": "^24.8.0",
     "mock-fs": "^4.10.1",
-    "semantic-release": "^15.13.16",
-    "standard": "^12.0.1"
+    "semantic-release": "^15.13.18",
+    "standard": "^13.0.2"
   },
   "standard": {
     "globals": [
@@ -54,10 +54,10 @@
     "ignore": []
   },
   "dependencies": {
-    "find-git-root": "^1.0.0",
-    "lodash": "^4.17.11",
-    "read-pkg": "^5.1.1",
-    "semver": "^6.1.1"
+    "find-git-root": "^1.0.2",
+    "lodash": "^4.17.14",
+    "read-pkg": "^5.2.0",
+    "semver": "^6.2.0"
   },
   "release": {
     "branch": "master",
