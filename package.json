@@ -2,11 +2,11 @@
   "version": "2.9.4",
   "name": "semantic-release-monorepo-hooks",
   "description": "Semantic release monorepo hooks",
-  "main": "src/index.js",
+  "main": "src/main/js/index.js",
   "files": [
     "README.md",
     "CHANGELOG.md",
-    "src"
+    "src/main"
   ],
   "license": "MIT",
   "keywords": [
@@ -23,7 +23,8 @@
     "test_with_report": "npm test && npm run coveralls_push",
     "coveralls_push": "cat ./coverage/lcov.info | coveralls",
     "jest": "BABEL_ENV=test NODE_ENV=test jest -w 1 --detectOpenHandles --config jest.config.json",
-    "lint": "standard src/**/*.js test/**/*.js"
+    "lint": "standard src/**/*.js",
+    "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^3.0.4",
@@ -40,6 +41,8 @@
     "globals": [
       "jest",
       "it",
+      "fit",
+      "xit",
       "expect",
       "describe",
       "before",

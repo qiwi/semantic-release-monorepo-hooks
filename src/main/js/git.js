@@ -1,4 +1,4 @@
-const sh = require('./sh')
+const sh = require('../sh')
 const semver = require('semver')
 const log = require('./log')
 
@@ -24,7 +24,7 @@ function getLastTag () {
   return sh.getLastTag()
 }
 
-function getLastTaggedCommitMessage() {
+function getLastTaggedCommitMessage () {
   return sh.getLastTaggedCommitMessage()
 }
 
@@ -53,7 +53,7 @@ function dropLastRelease () {
 function joinReleases (releases) {
   const tag = getHighestReleaseVersion.apply(null, releases.map(r => r.tag))
   const message = joinMessages.apply(null, releases.map(r => r.message))
-  
+
   return {
     tag,
     message
@@ -63,7 +63,7 @@ function joinReleases (releases) {
 function reformat (message) {
   try {
     const re = /(Performance Improvements|Features|Bug Fixes)(.+)/i
-    const [commit, link, ...details] = message.split(/#+/g)
+    const [, link, ...details] = message.split(/#+/g)
     const changes = details.map(detail => {
       return re.exec(detail).slice(1).map((v, i) => {
         return i % 2 === 0
@@ -92,14 +92,14 @@ function joinMessages () {
   return [].slice.call(arguments).map(reformat).join('  \n') // NOTE markdown break
 }
 
-function createRelease(tag, message) {
+function createRelease (tag, message) {
   const data = JSON.stringify({
-    "tag_name": tag,
-    "target_commitish": "master",
-    "name": tag,
-    "body": message,
-    "draft": false,
-    "prerelease": false
+    tag_name: tag,
+    target_commitish: 'master',
+    name: tag,
+    body: message,
+    draft: false,
+    prerelease: false
   })
 
   log('create github release', data)

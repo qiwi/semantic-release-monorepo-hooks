@@ -1,4 +1,4 @@
-const exec = require('../src/exec')
+const exec = require('../../main/js/exec')
 const cp = require('child_process')
 
 describe('exec', () => {

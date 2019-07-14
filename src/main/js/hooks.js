@@ -4,45 +4,15 @@ const store = require('./store')
 const log = require('./log')
 const config = require('./config')
 const exec = require('./exec')
-const {get} = require('lodash')
+const { get } = require('lodash')
 
-function process (temp, tag, isModified, protectTemp) {
-  temp.run += 1
-
-  if (isModified) {
-    temp.processed += 1
-
-    handleRelease(temp, tag)
-  }
-
-  saveTemp(temp, protectTemp)
-}
-
-function saveTemp (temp, protectTemp) {
-  store.save(temp)
-
-  if (temp.run === temp.total && !protectTemp) {
-    store.unlink()
-  }
-}
-
-function handleRelease (temp, currentTag) {
-  if (temp.tag !== currentTag) {
-    const release = git.dropLastRelease()
-
-    temp.reverted.push(release)
-
-    log('drop release', 'tag=', release.tag, 'message=', release.message)
-  }
-}
-
-const hookBeforeAll = function(force) {
+const hookBeforeAll = function (force) {
   log('hook `before all` thrown')
 
   return store.init(force)
 }
 
-const hookBeforeEach = function(dryRun, protectTemp) {
+const hookBeforeEach = function (dryRun, protectTemp) {
   log('hook `before each` thrown')
 
   const name = readPkg.sync().name
@@ -76,7 +46,7 @@ const hookBeforeEach = function(dryRun, protectTemp) {
   return res
 }
 
-const hookAfterEach = function(dryRun) {
+const hookAfterEach = function (dryRun) {
   log('hook `after each` thrown')
 
   if (dryRun) {
@@ -97,7 +67,7 @@ const hookAfterEach = function(dryRun) {
   store.save(temp)
 }
 
-const hookAfterAll = function(dryRun) {
+const hookAfterAll = function (dryRun) {
   log('hook `after all` thrown')
 
   if (store.ready()) {
@@ -105,7 +75,7 @@ const hookAfterAll = function(dryRun) {
     const temp = store.get()
 
     if (temp.reverted.length > 0) {
-      const {tag, message} = git.joinReleases(temp.reverted)
+      const { tag, message } = git.joinReleases(temp.reverted)
 
       git.addTag(tag, message)
       git.createRelease(tag, message)

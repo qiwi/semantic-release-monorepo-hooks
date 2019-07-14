@@ -1,8 +1,8 @@
 const path = require('path')
-const resolve = path.resolve.bind(path, __dirname)
+const resolve = path.resolve.bind(path, __dirname, '..')
 
 module.exports = {
-  TEMP: resolve('count.tmp'),
+  TEMP: path.resolve(__dirname, '../../../count.tmp'),
   COUNT_ALL_PACKS_SH: resolve('sh/count_all_packs.sh'),
   GET_LAST_TAG_SH: resolve('sh/get_last_tag.sh'),
   ADD_TAG_SH: resolve('sh/add_tag.sh'),

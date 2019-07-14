@@ -2,7 +2,7 @@ const log = require('./log')
 const cp = require('child_process')
 
 module.exports = {
-  run(cmd) {
+  run (cmd) {
     log('cmd=', cmd)
 
     try {

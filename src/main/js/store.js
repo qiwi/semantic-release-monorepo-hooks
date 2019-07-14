@@ -1,12 +1,12 @@
 const fs = require('fs')
-const sh = require('./sh')
-const {TEMP} = require('./path')
+const sh = require('../sh')
+const { TEMP } = require('./path')
 
 module.exports = {
-  ready() {
+  ready () {
     return fs.existsSync(TEMP)
   },
-  init() {
+  init () {
     if (this.ready()) {
       throw new Error('Temp file is already exists')
     }
@@ -33,7 +33,7 @@ module.exports = {
   },
   get () {
     if (this.ready()) {
-      return JSON.parse(fs.readFileSync(TEMP, {encoding: 'utf8'}))
+      return JSON.parse(fs.readFileSync(TEMP, { encoding: 'utf8' }))
     }
 
     throw new Error('Temp storage is not initialized. Trigger `hookBeforeAll` before the current step')

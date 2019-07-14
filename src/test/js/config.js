@@ -1,4 +1,4 @@
-const config = require('../src/config')
+const config = require('../../main/js/config')
 const readPkg = require('read-pkg').sync
 
 describe('config', () => {

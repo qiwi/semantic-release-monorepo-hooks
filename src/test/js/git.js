@@ -1,4 +1,4 @@
-const git = require('../src/git')
+const git = require('../../main/js/git')
 
 describe('git', () => {
   describe('getHighestReleaseVersion', () => {

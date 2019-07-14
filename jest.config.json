@@ -5,9 +5,9 @@
     "interface.js"
   ],
   "collectCoverageFrom": [
-    "<rootDir>/src/**/*.js"
+    "<rootDir>/src/main/js/**/*.js"
   ],
   "testMatch": [
-    "<rootDir>/test/**/*.js"
+    "<rootDir>/src/test/js/**/*.js"
   ]
 }

@@ -1,4 +1,4 @@
-const path = require('../path')
+const path = require('../js/path')
 const cp = require('child_process')
 
 module.exports = {

@@ -12,7 +12,6 @@ const releaserc = (() => {
 
   try {
     return require(releasercPath)
-
   } catch (err) {
     log(`'${RELEASERC}' is not found, so '${PACKAGEJSON}#release' will be used instead`)
     log('err=', err)
