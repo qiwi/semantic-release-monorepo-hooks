@@ -8,7 +8,7 @@ module.exports = {
   },
   init () {
     if (this.ready()) {
-      throw new Error('Temp file is already exists')
+      throw new Error('Temp file already exists')
     }
 
     const tag = sh.getLastTag()
