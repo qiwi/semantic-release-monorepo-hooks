@@ -20,8 +20,8 @@
   },
   "scripts": {
     "test": "npm run lint && npm run jest",
-    "test_with_report": "npm test && npm run coveralls_push",
-    "coveralls_push": "cat ./coverage/lcov.info | coveralls",
+    "test:report": "npm test && npm run coveralls:push",
+    "coveralls:push": "cat ./coverage/lcov.info | coveralls",
     "jest": "BABEL_ENV=test NODE_ENV=test jest -w 1 --detectOpenHandles --config jest.config.json",
     "lint": "standard src/**/*.js",
     "lint:fix": "npm run lint -- --fix"

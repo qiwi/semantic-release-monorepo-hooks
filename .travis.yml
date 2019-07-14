@@ -20,7 +20,7 @@ install:
   - npm install
 
 script:
-  - npm run test_with_report
+  - npm run test:report
 
 deploy:
   provider: script
