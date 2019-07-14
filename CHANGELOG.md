@@ -1,3 +1,10 @@
+## [2.9.5](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.4...v2.9.5) (2019-07-14)
+
+
+### Performance Improvements
+
+* repack ([5126446](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/5126446))
+
 ## [2.9.4](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.3...v2.9.4) (2019-07-03)
 
 
