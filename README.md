@@ -8,6 +8,19 @@ Workaround to handle `semantic-release-monorepo` multipublishing.
 [![Test Coverage](https://api.codeclimate.com/v1/badges/74c25847a6bffa1223a4/test_coverage)](https://codeclimate.com/github/qiwi/semantic-release-monorepo-hooks/test_coverage)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
+## Migration proposal
+This project provided invaluable experience in understanding how **lerna** and **semantic-release** work.
+Along with this came the realization that approach of combining needed to be changed.
+I wrote [a short note](https://dev.to/antongolub/the-chronicles-of-semantic-release-and-monorepos-5cfc) on the evolution of these ideas.
+In my opinion, the best solution today is [multi-semantic-release](https://github.com/dhoulb/multi-semantic-release):
+* Much more robust and predictable.
+* Simple and maintainable.
+* Compatible with the latest versions of **semrel** and its plugins.
+* Supports parallel release flow (faster).
+* Brings an automatic update of cross-packages dependencies.
+* Project is used and supported as part of QIWI in-house development infrastructure (not sure if this is a positive point :-).
+
+Thank you all for your feedback, PRs, downloads and stars.
 ## Problem
 1) [semantic-release](https://github.com/semantic-release/semantic-release) does not support `lerna`-based repos aka `monorepos` out of box.
 2) [semantic-release-monorepo](https://github.com/Updater/semantic-release-monorepo) can not release several packages at once: after the first sub-release it appends a new git version tag, so any next run finds no changes.
