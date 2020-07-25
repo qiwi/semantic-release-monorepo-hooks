@@ -24,7 +24,8 @@
     "coveralls:push": "cat ./coverage/lcov.info | coveralls",
     "jest": "BABEL_ENV=test NODE_ENV=test jest -w 1 --detectOpenHandles --config jest.config.json",
     "lint": "standard src/**/*.js",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "postupdate": "npm i && npm audit fix && npm test"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^5.0.1",
