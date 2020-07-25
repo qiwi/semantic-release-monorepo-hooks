@@ -9,7 +9,7 @@ describe('git', () => {
 
   describe('joinMessages', () => {
     it('returns concatenated string', () => {
-      expect(git.joinMessages('foo', 'bar', 'baz')).toBe(`foo  \nbar  \nbaz`)
+      expect(git.joinMessages('foo', 'bar', 'baz')).toBe('foo  \nbar  \nbaz')
     })
 
     it('reformats if possible', () => {

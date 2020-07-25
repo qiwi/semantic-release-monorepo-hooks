@@ -27,15 +27,15 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^3.0.4",
-    "@semantic-release/git": "^7.0.16",
-    "@semantic-release/github": "^5.4.2",
-    "@semantic-release/npm": "^5.1.13",
-    "coveralls": "^3.0.5",
-    "jest": "^24.8.0",
-    "mock-fs": "^4.10.1",
-    "semantic-release": "^15.13.18",
-    "standard": "^13.0.2"
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.0.7",
+    "@semantic-release/npm": "^7.0.5",
+    "coveralls": "^3.1.0",
+    "jest": "^26.1.0",
+    "mock-fs": "^4.12.0",
+    "semantic-release": "^17.1.1",
+    "standard": "^14.3.4"
   },
   "standard": {
     "globals": [
@@ -57,10 +57,10 @@
     "ignore": []
   },
   "dependencies": {
-    "find-git-root": "^1.0.2",
-    "lodash": "^4.17.14",
+    "find-git-root": "^1.0.4",
+    "lodash": "^4.17.19",
     "read-pkg": "^5.2.0",
-    "semver": "^6.2.0"
+    "semver": "^7.3.2"
   },
   "release": {
     "branch": "master",
