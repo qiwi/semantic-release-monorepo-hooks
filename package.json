@@ -25,18 +25,13 @@
     "jest": "BABEL_ENV=test NODE_ENV=test jest -w 1 --detectOpenHandles --config jest.config.json",
     "lint": "standard src/**/*.js",
     "lint:fix": "npm run lint -- --fix",
-    "postupdate": "npm i && npm audit fix && npm test"
+    "postupdate": "npm i && npm shrinkwrap && npm audit fix && npm test"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^5.0.1",
-    "@semantic-release/git": "^9.0.0",
-    "@semantic-release/github": "^7.0.7",
-    "@semantic-release/npm": "^7.0.5",
     "coveralls": "^3.1.0",
-    "jest": "^26.1.0",
-    "mock-fs": "^4.12.0",
-    "semantic-release": "^17.1.1",
-    "standard": "^14.3.4"
+    "jest": "^26.6.3",
+    "mock-fs": "^4.13.0",
+    "standard": "^16.0.1"
   },
   "standard": {
     "globals": [
@@ -59,25 +54,8 @@
   },
   "dependencies": {
     "find-git-root": "^1.0.4",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "read-pkg": "^5.2.0",
     "semver": "^7.3.2"
-  },
-  "release": {
-    "branch": "master",
-    "verifyConditions": [
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      "@semantic-release/git"
-    ],
-    "prepare": [
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      "@semantic-release/git"
-    ],
-    "publish": [
-      "@semantic-release/npm",
-      "@semantic-release/github"
-    ]
   }
 }
