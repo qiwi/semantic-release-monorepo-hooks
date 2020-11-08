@@ -1,3 +1,10 @@
+## [2.9.7](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.6...v2.9.7) (2020-11-08)
+
+
+### Performance Improvements
+
+* **package:** deps revision, fix vuls ([5290e34](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/5290e34c8d958597980b44169b1e4b81a54c02e5))
+
 ## [2.9.6](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.5...v2.9.6) (2020-07-25)
 
 
