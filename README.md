@@ -1,5 +1,5 @@
 # semantic-release-monorepo-hooks
-Workaround to handle `semantic-release-monorepo` multipublishing.
+Workaround to handle `semantic-release-monorepo` multipublishing
 
 [![Build Status](https://travis-ci.com/qiwi/semantic-release-monorepo-hooks.svg?branch=master)](https://travis-ci.com/qiwi/semantic-release-monorepo-hooks)
 [![npm (tag)](https://img.shields.io/npm/v/semantic-release-monorepo-hooks/latest.svg)](https://www.npmjs.com/package/semantic-release-monorepo-hooks)
