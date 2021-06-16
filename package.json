@@ -56,7 +56,7 @@
   "dependencies": {
     "find-git-root": "^1.0.4",
     "lodash": "^4.17.21",
-    "read-pkg": "^5.2.0",
+    "read-pkg": "^6.0.0",
     "semver": "^7.3.4"
   },
   "release": {
