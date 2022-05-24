@@ -1,8 +1,8 @@
 const path = require('path')
-const findGitRoot = require('find-git-root')
+const { gitRootSync } = require('@antongolub/git-root')
 const log = require('./log')
 
-const ROOT = path.resolve(findGitRoot(__dirname), '..')
+const ROOT = path.resolve(gitRootSync())
 const RELEASERC = '.releaserc.js'
 const PACKAGEJSON = 'package.json'
 
