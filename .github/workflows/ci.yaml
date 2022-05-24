@@ -102,7 +102,7 @@ jobs:
 
       - name: Test & push coverage
         if: matrix.node-version == '18' && matrix.os == 'ubuntu-20.04'
-        run: yarn test
+        run: yarn test:report
 
   release:
     name: Release

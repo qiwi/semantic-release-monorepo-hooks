@@ -22,7 +22,7 @@
     "build": "echo `build is not required` && exit 0",
     "test": "yarn lint && yarn test:unit",
     "test:report": "yarn test && yarn coveralls:push",
-    "coveralls:push": "cat ./coverage/lcov.info | coveralls",
+    "coveralls:push": "cat ./coverage/lcov.info | coveralls || echo 'coveralls push failed :(' && exit 0",
     "test:unit": "BABEL_ENV=test NODE_ENV=test jest -w 1 --detectOpenHandles --config jest.config.json",
     "lint": "standard src/**/*.js",
     "lint:fix": "yarn lint -- --fix",
@@ -30,10 +30,10 @@
     "postupdate": "npm i && npm shrinkwrap && npm audit fix && npm test"
   },
   "devDependencies": {
-    "coveralls": "^3.1.0",
-    "jest": "^27.0.0",
-    "mock-fs": "^5.0.0",
-    "standard": "^16.0.3"
+    "coveralls": "^3.1.1",
+    "jest": "^28.1.0",
+    "mock-fs": "^5.1.2",
+    "standard": "^17.0.0"
   },
   "standard": {
     "globals": [
@@ -55,10 +55,10 @@
     "ignore": []
   },
   "dependencies": {
-    "find-git-root": "^1.0.4",
+    "@antongolub/git-root": "^1.5.7",
     "lodash": "^4.17.21",
     "read-pkg": "^5.2.0",
-    "semver": "^7.3.4"
+    "semver": "^7.3.7"
   },
   "release": {
     "branch": "master",
