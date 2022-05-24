@@ -1,3 +1,10 @@
+## [2.9.9](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.8...v2.9.9) (2022-05-24)
+
+
+### Bug Fixes
+
+* up deps ([c2413b8](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/c2413b84e797aeecee069153cf7f594a6a753188))
+
 ## [2.9.8](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.7...v2.9.8) (2021-03-10)
 
 
