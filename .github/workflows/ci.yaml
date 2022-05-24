@@ -50,28 +50,26 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Restore artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: artifact-${{ github.run_id }}
-
       - uses: actions/setup-node@v3
         with:
           node-version: 18
       - run: yarn
 
-      - name: Unit test only
-        run: yarn test:unit
+      - name: Tests
+        run: yarn test
 
-      - name: Update coverage
+      - name: Coveralls
         if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v3
+        run: yarn coveralls:push
+
+      - name: Push coverage to CodeClimate
+        if: github.ref == 'refs/heads/master'
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          name: artifact-${{ github.run_id }}
-          retention-days: 1
-          path: |
-            coverage
-            .nyc_output
+          coverageLocations: |
+            ${{github.workspace}}/coverage/*.lcov:lcov
 
   test_pr:
     if: github.event_name == 'pull_request'
@@ -85,22 +83,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Restore artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: artifact-${{ github.run_id }}
-
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
-      - name: Test only
-        if: matrix.node-version != '18' || matrix.os != 'ubuntu-20.04'
-        run: yarn test
 
-      - name: Test & push coverage
-        if: matrix.node-version == '18' && matrix.os == 'ubuntu-20.04'
-        run: yarn test:report
+      - name: Tests
+        run: yarn test
 
   release:
     name: Release
@@ -118,13 +107,10 @@ jobs:
         with:
           node-version: 18
 
-      - name: Codeclimate
-        uses: paambaati/codeclimate-action@v3.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      - name: Restore artifact
+        uses: actions/download-artifact@v3
         with:
-          coverageLocations: |
-            ${{github.workspace}}/coverage/*.lcov:lcov
+          name: artifact-${{ github.run_id }}
 
       - name: Release
         env:
