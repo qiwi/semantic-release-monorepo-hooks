@@ -18,6 +18,7 @@ Thus, today we suggest using [multi-semantic-release](https://github.com/dhoulb/
 * Brings an automatic update of cross-packages dependencies.
 * Project is used and supported as part of QIWI in-house development infrastructure (not sure if this is a positive point :-).
 
+Further development of this project seems futile. Anyway, we will regularly apply vulnerability patches for as long as possible.
 Thank you all for your feedback, PRs, downloads and stars.
 
 ## Problem
@@ -120,3 +121,6 @@ Hooks reverts some effects of previous `semantic-release` run and returns info m
 ## Alternatives
 
 Take a look at [multi-semantic-release](https://github.com/dhoulb/multi-semantic-release). With [`--execasync`](https://github.com/dhoulb/multi-semantic-release/pull/2) flag it produces the same effect but in a different way.
+
+## License
+[MIT](./LICENSE)
