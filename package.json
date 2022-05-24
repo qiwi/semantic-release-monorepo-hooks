@@ -57,7 +57,7 @@
   "dependencies": {
     "@antongolub/git-root": "^1.5.7",
     "lodash": "^4.17.21",
-    "read-pkg": "^5.2.0",
+    "read-pkg": "^7.0.0",
     "semver": "^7.3.7"
   },
   "release": {
