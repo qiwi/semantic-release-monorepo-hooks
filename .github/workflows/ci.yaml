@@ -41,9 +41,6 @@ jobs:
           retention-days: 1
           path: |
             docs
-            target
-            flow-typed
-            typings
             buildstamp.json
 
   test_push:

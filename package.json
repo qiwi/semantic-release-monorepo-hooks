@@ -19,15 +19,15 @@
     "url": "git@github.com:qiwi/semantic-release-monorepo-hooks.git"
   },
   "scripts": {
-    "build": "echo `build is not required` && exit 0",
+    "build": "yarn docs",
     "test": "yarn lint && yarn test:unit",
+    "test:unit": "BABEL_ENV=test NODE_ENV=test jest -w 1 --detectOpenHandles --config jest.config.json",
     "test:report": "yarn test && yarn coveralls:push",
     "coveralls:push": "cat ./coverage/lcov.info | coveralls || echo 'coveralls push failed :(' && exit 0",
-    "test:unit": "BABEL_ENV=test NODE_ENV=test jest -w 1 --detectOpenHandles --config jest.config.json",
     "lint": "standard src/**/*.js",
     "lint:fix": "yarn lint -- --fix",
     "docs": "mkdir -p docs && cp README.md docs/README.md",
-    "postupdate": "npm i && npm shrinkwrap && npm audit fix && npm test"
+    "postupdate": "yarn && yarn build && yarn test"
   },
   "devDependencies": {
     "coveralls": "^3.1.1",
