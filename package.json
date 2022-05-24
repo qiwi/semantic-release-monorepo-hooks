@@ -1,5 +1,5 @@
 {
-  "version": "2.9.9",
+  "version": "2.10.0",
   "name": "semantic-release-monorepo-hooks",
   "description": "Semantic release monorepo hooks",
   "main": "src/main/js/index.js",

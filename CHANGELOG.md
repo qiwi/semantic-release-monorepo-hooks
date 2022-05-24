@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.9...v2.10.0) (2022-05-24)
+
+
+### Features
+
+* use cosmiconfig for release config loading ([7f9c40b](https://github.com/qiwi/semantic-release-monorepo-hooks/commit/7f9c40b4d27119d832f28efcc0e979b2956980ce))
+
 ## [2.9.9](https://github.com/qiwi/semantic-release-monorepo-hooks/compare/v2.9.8...v2.9.9) (2022-05-24)
 
 
