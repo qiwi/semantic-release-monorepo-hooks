@@ -41,7 +41,7 @@ jobs:
           retention-days: 1
           path: |
             docs
-            buildstamp.json
+            package.json
 
   test_push:
     needs: build
@@ -59,8 +59,9 @@ jobs:
         with:
           node-version: 18
       - run: yarn
+
       - name: Unit test only
-        run: yarn test
+        run: yarn test:unit
 
       - name: Update coverage
         if: github.ref == 'refs/heads/master'
@@ -112,11 +113,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           persist-credentials: false
-
-      - name: Restore artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: artifact-${{ github.run_id }}
 
       - uses: actions/setup-node@v3
         with:

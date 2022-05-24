@@ -8,11 +8,11 @@ Workaround to handle `semantic-release-monorepo` multipublishing
 
 ## Migration proposal
 This project provided invaluable experience in understanding how **lerna** and **semantic-release** work.
-Along with this came the realization that approach of combining needed to be changed.
-I wrote [a short note](https://dev.to/antongolub/the-chronicles-of-semantic-release-and-monorepos-5cfc) on the evolution of these ideas.
-In my opinion, the best solution today is [multi-semantic-release](https://github.com/dhoulb/multi-semantic-release):
+Along with this came the realization that the approach needed to be changed.
+Here's [the short note](https://dev.to/antongolub/the-chronicles-of-semantic-release-and-monorepos-5cfc) on the evolution of these ideas.
+Thus, today we suggest using [multi-semantic-release](https://github.com/dhoulb/multi-semantic-release) as the best alternative:
 * Much more robust and predictable.
-* Simple and maintainable.
+* Maintainable and maintained.
 * Compatible with the latest versions of **semrel** and its plugins.
 * Supports parallel release flow (faster).
 * Brings an automatic update of cross-packages dependencies.
