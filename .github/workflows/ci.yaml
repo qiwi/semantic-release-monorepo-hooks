@@ -1,0 +1,145 @@
+# This is a Github Workflow that runs tests on any push or pull request.
+# If the tests pass and this is a push to the master branch it also runs Semantic Release.
+name: CI
+on: [push, pull_request]
+jobs:
+  init:
+    name: init
+    runs-on: ubuntu-20.04
+    outputs:
+      skip: ${{ steps.ci-skip-step.outputs.ci-skip }}
+      skip-not: ${{ steps.ci-skip-step.outputs.ci-skip-not }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: ci-skip-step
+        uses: mstachniuk/ci-skip@v1
+
+  build:
+    name: build
+    needs: init
+    if: ${{ needs.init.outputs.skip == 'false' }}
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Fetch deps
+        run: yarn
+
+      - name: Build target
+        run: yarn build
+
+      - name: Save artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact-${{ github.run_id }}
+          retention-days: 1
+          path: |
+            docs
+            target
+            flow-typed
+            typings
+            buildstamp.json
+
+  test_push:
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Restore artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact-${{ github.run_id }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: yarn
+      - name: Unit test only
+        run: yarn test
+
+      - name: Update coverage
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact-${{ github.run_id }}
+          retention-days: 1
+          path: |
+            coverage
+            .nyc_output
+
+  test_pr:
+    if: github.event_name == 'pull_request'
+    needs: build
+    strategy:
+      matrix:
+        os: [ ubuntu-20.04 ]
+        node-version: [ 14, 18 ]
+    name: Test (Node v${{ matrix.node-version }}, OS ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Restore artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact-${{ github.run_id }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn
+      - name: Test only
+        if: matrix.node-version != '18' || matrix.os != 'ubuntu-20.04'
+        run: yarn test
+
+      - name: Test & push coverage
+        if: matrix.node-version == '18' && matrix.os == 'ubuntu-20.04'
+        run: yarn test
+
+  release:
+    name: Release
+    # https://github.community/t/trigger-job-on-tag-push-only/18076
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: test_push
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Restore artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact-${{ github.run_id }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Codeclimate
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageLocations: |
+            ${{github.workspace}}/coverage/*.lcov:lcov
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_USER: 'qiwibot'
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GIT_AUTHOR_EMAIL: 'opensource@qiwi.com'
+          GIT_COMMITTER_EMAIL: 'opensource@qiwi.com'
+          GIT_AUTHOR_NAME: '@qiwibot'
+          GIT_COMMITTER_NAME: '@qiwibot'
+        run: npx -p @qiwi/semrel-toolkit semantic-release -e @qiwi/semrel-config
