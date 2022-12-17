@@ -59,6 +59,6 @@
     "lodash": "^4.17.21",
     "semver": "^7.3.7",
     "cosmiconfig": "^7.0.1",
-    "read-pkg": "^5.2.0"
+    "read-pkg": "^7.0.0"
   }
 }
