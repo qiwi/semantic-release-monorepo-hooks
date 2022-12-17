@@ -58,7 +58,7 @@
     "@antongolub/git-root": "^1.5.7",
     "lodash": "^4.17.21",
     "semver": "^7.3.7",
-    "cosmiconfig": "^7.0.1",
+    "cosmiconfig": "^8.0.0",
     "read-pkg": "^5.2.0"
   }
 }
