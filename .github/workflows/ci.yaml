@@ -35,7 +35,7 @@ jobs:
         run: yarn build
 
       - name: Save artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: artifact-${{ github.run_id }}
           retention-days: 1
